@@ -1,5 +1,5 @@
 # pladias-geoservices
-JS module for using Pladias webservices (pladias.cz)
+JS module for consuming [Pladias](pladias.cz) geowebservices by using OpenLayers. 
 
 
 ### sample usage in package.json
@@ -10,3 +10,7 @@ JS module for using Pladias webservices (pladias.cz)
   }
 }
 ```
+
+## TBD
+* split content to several files
+* divide content into general and site-specific
