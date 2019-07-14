@@ -1,19 +1,19 @@
 import {getTransform, transform, transformExtent} from "ol/proj";
-import PladiasMap from "../index";
 import {applyTransform} from "ol/extent";
+import projection from "./projections";
 
 const Geofunctions = {
     transformExtentOL2WGS: function (extent) {
-        return transformExtent(extent, PladiasMap.projection.OL, PladiasMap.projection.WGS).join(',');
+        return transformExtent(extent, projection.OL, projection.WGS).join(',');
     },
     transformExtentWGS2OL: function (extent) {
-        return applyTransform(extent, getTransform(PladiasMap.projection.WGS, PladiasMap.projection.OL));
+        return applyTransform(extent, getTransform(projection.WGS, projection.OL));
     },
     transformCoordsOL2WGS: function (coordinates) {
-        return transform(coordinates, PladiasMap.projection.OL.getCode(), PladiasMap.projection.WGS.getCode());
+        return transform(coordinates, projection.OL.getCode(), projection.WGS.getCode());
     },
     transformCoordsWGS2OL: function (coordinates) {
-        return transform(coordinates, PladiasMap.projection.WGS.getCode(), PladiasMap.projection.OL.getCode());
+        return transform(coordinates, projection.WGS.getCode(), projection.OL.getCode());
     },
     convertDMSFormat: function (coordinate, type) {
         let coords = [];

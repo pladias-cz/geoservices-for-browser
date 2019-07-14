@@ -1,23 +1,24 @@
-import {Circle as CircleStyle, Fill, Stroke, Style, Text} from "ol/style";
+import {Circle as CircleStyle, Style, Text} from "ol/style";
 import colors from "./colors";
+
 
 export const styleFunction = {
     countRadius: function (zoom, correction, min) {
         return (min * (zoom - correction));
     },
     getStyle: function (name, radius = 1) {
-        return common[name](radius);
+        return commonStyles[name](radius);
     },
     getSquareText: function (feature, resolution) {
         let text = feature.get('id').toString();
         if (resolution > 300) {
             text = '';
         }
-        return new Text({text: text, font: '12px sans-serif', fill: new Fill({color: 'rgba(0, 0, 0, 0.7)'})});
+        return new Text({text: text, font: '12px sans-serif', fill: colors.text.black});
     },
 };
 
-export const common =
+export const commonStyles =
     {
         jisty: function (radius) {
             return [new Style({
@@ -40,10 +41,7 @@ export const common =
         squares: function (feature, resolution) {
             //https://openlayers.org/en/latest/examples/vector-labels.html
             return new Style({
-                stroke: new Stroke({
-                    color: 'blue',
-                    width: 1
-                }),
+                stroke: colors.stroke.squares,
                 text: styleFunction.getSquareText(feature, resolution)
             });
         },
@@ -51,15 +49,12 @@ export const common =
         regions: function (feature, resolution) {
             //https://openlayers.org/en/latest/examples/vector-labels.html
             return new Style({
-                stroke: new Stroke({
-                    color: 'rgba(110, 67, 2, 0.7)',
-                    width: 2
-                })
+                stroke: colors.stroke.regions
             });
         },
     };
 
-export const preprint = {
+export const preprintStyles = {
     getStyle: function (name, radius = 1) {
         return this[name](radius);
     },

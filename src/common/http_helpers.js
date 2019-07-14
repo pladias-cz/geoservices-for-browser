@@ -1,23 +1,30 @@
 export function isLocalhost() {
-    return ('localhost' === window.location.href.toString().split("/")[2].split(":")[0])
+    return (location.hostname === "localhost" || location.hostname === "127.0.0.1");
 }
 
-export function redirect(url) {
+export function redirect(url, timeout=0) {
     setTimeout(function () {
         window.location.href = url;
-    }, 0);
+    }, timeout);
 }
 
 export function getHost() {
-    return window.location.href.toString().split("/")[2];
+    return location.hostname;
+}
+
+export function getPort() {
+    if (""===location.port){
+        return "80";
+    }
+    return location.port;
 }
 
 export function getProtocol() {
-    return window.location.href.toString().split("/")[0];
+    return location.protocol;
 }
 
 export function getGeoBasePath(){
-    return getProtocol() + '//' + getHost();
+    return getProtocol() + '//' + getHost() + ":" + getProtocol();
 }
 
 export function getAppBasePath() {

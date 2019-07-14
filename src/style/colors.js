@@ -3,7 +3,9 @@ import {Fill, Stroke} from "ol/style";
 const colors = {
     stroke: {
         jisty: new Stroke({color: '#000000', width: 0}),
-        neurceny: new Stroke({color: 'rgba(200, 200, 200, 1)', width: 1})
+        neurceny: new Stroke({color: 'rgba(200, 200, 200, 1)', width: 1}),
+        squares: new Stroke({color: 'blue',width: 1}),
+        regions: new Stroke({color: 'rgba(110, 67, 2, 0.7)',width: 2})
     },
     fill: {
         jisty: new Fill({color: '#000000'}),
@@ -14,6 +16,9 @@ const colors = {
         gray: new Fill({color: 'rgba(160, 160, 160, 1)'}),
         blue: new Fill({color: 'rgba(0, 0, 200, 0.8)'}),
         khaki: new Fill({color: 'rgba(240, 230, 140, 1)'})
+    },
+    text: {
+        black: new Fill({color: 'rgba(0, 0, 0, 0.7)'})
     }
 };
 
