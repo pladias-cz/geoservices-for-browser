@@ -1,12 +1,10 @@
-import {get as getProjection} from 'ol/proj';
-import {defaults as defaultControls, OverviewMap} from 'ol/control.js';
-import * as PladiasServer from './pladias_server';
+import * as httpHelper from './common/http_helpers';
+import {common as PladiasStyles, preprint as PladiasPreprintStyles} from './style/styles';
 import {Circle as CircleStyle, Fill, Stroke, Style, Text} from 'ol/style.js';
 import Circle from 'ol/geom/Circle';
 import VectorLayer from 'ol/layer/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
-import {transform, transformExtent, getTransform, METERS_PER_UNIT} from 'ol/proj';
-import {applyTransform} from 'ol/extent';
+import {transform, transformExtent, METERS_PER_UNIT} from 'ol/proj';
 import TileLayer from 'ol/layer/Tile';
 import OSMSource from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
@@ -18,111 +16,7 @@ import $ from 'jquery';
 
 const PladiasMap = {};
 
-PladiasMap.projection = {
-        client: getProjection('EPSG:3857'),
-        server: getProjection('EPSG:4326')
-};
-
-PladiasMap.center = {
-        CR: function () {
-                return transform([15.4, 49.85], PladiasMap.projection.server, PladiasMap.projection.client)
-        },
-        Sumava: function () {
-                return transform([13.8, 48.95], PladiasMap.projection.server, PladiasMap.projection.client)
-        }
-};
-
-PladiasMap.extent = {
-        rawCR: function () {
-                let extent = [14.9, 48.6, 16.1, 51.1];
-                return applyTransform(extent, getTransform(PladiasMap.projection.server, PladiasMap.projection.client));
-        },
-        transformPreprint: function (extent) {
-                return transformExtent(extent, PladiasMap.projection.client, PladiasMap.projection.server).join(',');
-        }
-};
-
-PladiasMap.controls = defaultControls().extend([
-    new OverviewMap()
-]);
-
-// PladiasMap.controls = {
-//     withExtent: [
-//         new ol.control.Attribution(),
-//         new ol.control.Zoom(),
-//         new ol.control.ZoomToExtent({extent: PladiasMap.extent.rawCR()}),
-//     ]
-// };
-
-PladiasMap.geoserver = {
-    public_wfs: 'https://geoserver.ibot.cas.cz/pladias_wfs/ows',
-    public_wms: 'https://geoserver.ibot.cas.cz/pladias/ows',
-    common_wfs: 'https://geoserver.ibot.cas.cz/common_wfs/ows',
-    common_wms: 'https://geoserver.ibot.cas.cz/common/ows',
-    protected_wms: PladiasServer.getGeoBasePath() + '/geoserver/validation/wms',
-    preprint_wfs: PladiasServer.getAppBasePath() + '/geoserver2/public/ows'
-};
-
-PladiasMap.constants = {
-    sumava: 1,
-}
-
 PladiasMap.functions = {
-    convertDMS: function (coordinate, type) {
-        let coords = [];
-
-        let abscoordinate = Math.abs(coordinate)
-        let coordinatedegrees = Math.floor(abscoordinate);
-
-        let coordinateminutes = (abscoordinate - coordinatedegrees) / (1 / 60);
-        let tempcoordinateminutes = coordinateminutes;
-        coordinateminutes = Math.floor(coordinateminutes);
-        let coordinateseconds = (tempcoordinateminutes - coordinateminutes) / (1 / 60);
-        coordinateseconds = Math.round(coordinateseconds * 10);
-        coordinateseconds /= 10;
-
-        if (coordinatedegrees < 10)
-            coordinatedegrees = "0" + coordinatedegrees;
-
-        if (coordinateminutes < 10)
-            coordinateminutes = "0" + coordinateminutes;
-
-        if (coordinateseconds < 10)
-            coordinateseconds = "0" + coordinateseconds;
-
-        coords[0] = coordinatedegrees;
-        coords[1] = coordinateminutes;
-        coords[2] = coordinateseconds;
-        coords[3] = this.getHemi(coordinate, type);
-
-        return coords[0] + "°" + coords[1] + "\'" + coords[2] + "\"" + coords[3];
-    },
-    ol2gps: function (coordinates) {
-        return transform(coordinates, PladiasMap.projection.client.getCode(), PladiasMap.projection.server.getCode());
-    },
-    gps2ol: function (coordinates) {
-        return transform(coordinates, PladiasMap.projection.server.getCode(), PladiasMap.projection.client.getCode());
-    },
-    getHemi: function (coordinate, type) {
-        let coordinatehemi = "";
-        if (type === 'LAT') {
-            if (coordinate >= 0) {
-                coordinatehemi = "N";
-            }
-            else {
-                coordinatehemi = "S";
-            }
-        }
-        else if (type === 'LON') {
-            if (coordinate >= 0) {
-                coordinatehemi = "E";
-            } else {
-                coordinatehemi = "W";
-            }
-        }
-
-        return coordinatehemi;
-    },
     drawCircleInMeter: function (map, radius) {
         let circleRadius = (radius / METERS_PER_UNIT.m) * 2;
         let center = map.getView().getCenter();
@@ -132,7 +26,7 @@ PladiasMap.functions = {
 
         // Source and vector layer
         const vectorSource = new VectorSource({
-            projection: PladiasMap.projection.server.getCode()
+            projection: PladiasMap.projection.WGS.getCode()
         });
         vectorSource.addFeature(circleFeature);
         const vectorLayer = new VectorLayer({
@@ -142,12 +36,6 @@ PladiasMap.functions = {
         });
 
         map.addLayer(vectorLayer);
-    },
-    computeSquare: function (lon, lat) {
-        //if (lon>12 && lon<19.1 && lat>48.53 && lat<51.07)
-        let row = Math.round(559.5 - (10 * lat));
-        let col = Math.round((6 * lon) - 34.5);
-        return row + '' + col;
     },
     getLayer: function (name, visibility) {
         //  console.log('vyžádána vrstva '+name+' s viditelnsotí '+visibility);
@@ -244,137 +132,6 @@ PladiasMap.functions = {
         return Math.round(coord * 1000) / 1000;
     }
 };
-
-
-PladiasMap.colors = {
-    stroke: {
-        jisty: new Stroke({color: '#000000', width: 0}),
-        neurceny: new Stroke({color: 'rgba(200, 200, 200, 1)', width: 1})
-    },
-    fill: {
-        jisty: new Fill({color: '#000000'}),
-        neurceny: new Fill({color: 'rgba(210, 210, 210, 1)'}),
-        orange: new Fill({color: 'rgba(255, 60, 0, 1)'}),
-        yellow: new Fill({color: 'rgba(255, 255, 0, 1)'}),
-        black: new Fill({color: 'rgba(0, 0, 0, 1)'}),
-        gray: new Fill({color: 'rgba(160, 160, 160, 1)'}),
-        blue: new Fill({color: 'rgba(0, 0, 200, 0.8)'}),
-        khaki: new Fill({color: 'rgba(240, 230, 140, 1)'})
-    }
-};
-
-PladiasMap.styles = {
-    countRadius: function (zoom, correction, min) {
-        return ( min * (zoom - correction));
-    },
-    getStyle: function (name, radius = 1) {
-        return PladiasMap.styles[name](radius);
-    },
-    jisty: function (radius) {
-        return [new Style({
-            image: new CircleStyle({
-                radius: radius,
-                fill: PladiasMap.colors.fill.jisty,
-                stroke: PladiasMap.colors.stroke.jisty
-            })
-        })];
-    },
-    neurceny: function (radius) {
-        return new Style({
-            image: new CircleStyle({
-                radius: radius,
-                fill: PladiasMap.colors.fill.neurceny,
-                stroke: PladiasMap.colors.stroke.jisty
-            })
-        });
-    },
-    squares: function (feature, resolution) {
-        //https://openlayers.org/en/latest/examples/vector-labels.html
-        return new Style({
-            stroke: new Stroke({
-                color: 'blue',
-                width: 1
-            }),
-            text: PladiasMap.styles.getSquareText(feature, resolution)
-        });
-    },
-    getSquareText: function (feature, resolution) {
-        let text = feature.get('id').toString();
-        if (resolution > 300) {
-            text = '';
-        }
-        return new Text({text: text, font: '12px sans-serif', fill: new Fill({color: 'rgba(0, 0, 0, 0.7)'})});
-    },
-    regions: function (feature, resolution) {
-        //https://openlayers.org/en/latest/examples/vector-labels.html
-        return new Style({
-            stroke: new Stroke({
-                color: 'rgba(110, 67, 2, 0.7)',
-                width: 2
-            })
-        });
-    },
-};
-
-PladiasMap.preprintStyles = {
-    getStyle: function (name, radius = 1) {
-        return PladiasMap.preprintStyles[name](radius);
-    },
-    orange: function (radius) {
-        return [new Style({
-            image: new CircleStyle({
-                radius: radius,
-                fill: PladiasMap.colors.fill.orange,
-                stroke: PladiasMap.colors.stroke.jisty
-            })
-        })];
-    },
-    yellow: function (radius) {
-        return [new Style({
-            image: new CircleStyle({
-                radius: radius,
-                fill: PladiasMap.colors.fill.yellow,
-                stroke: PladiasMap.colors.stroke.jisty
-            })
-        })];
-    },
-    black: function (radius) {
-        return [new Style({
-            image: new CircleStyle({
-                radius: radius,
-                fill: PladiasMap.colors.fill.black,
-                stroke: PladiasMap.colors.stroke.jisty
-            })
-        })];
-    },
-    gray: function (radius) {
-        return [new Style({
-            image: new CircleStyle({
-                radius: radius,
-                fill: PladiasMap.colors.fill.gray,
-                stroke: PladiasMap.colors.stroke.jisty
-            })
-        })];
-    },
-    blue: function (radius) {
-        return [new Style({
-            image: new CircleStyle({
-                radius: radius,
-                fill: PladiasMap.colors.fill.blue,
-                stroke: PladiasMap.colors.stroke.jisty
-            })
-        })];
-    },
-    khaki: function (radius) {
-        return [new Style({
-            image: new CircleStyle({
-                radius: radius,
-                fill: PladiasMap.colors.fill.khaki,
-                stroke: PladiasMap.colors.stroke.jisty
-            })
-        })];
-    },
-}
 
 PladiasMap.layers = {
     osm: function (visibility) {
@@ -495,7 +252,6 @@ PladiasMap.layersWithRadius = {
     },
 };
 
-
 PladiasMap.preprintLayers = {
     preprintJisty: function (color, radius) {
         return new VectorLayer({
@@ -596,7 +352,7 @@ PladiasMap.vectorSources = {
             });
         },
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     regions: new VectorSource({
         format: new GeoJSON(),
@@ -617,7 +373,7 @@ PladiasMap.vectorSources = {
             });
         },
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     neurceny: new VectorLayer({
         format: new GeoJSON(),
@@ -638,7 +394,7 @@ PladiasMap.vectorSources = {
             });
         },
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     jisty: new VectorLayer({
         format: new GeoJSON(),
@@ -659,111 +415,111 @@ PladiasMap.vectorSources = {
             });
         },
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     preprintJisty: new VectorLayer({
         format: new GeoJSON(),
-        url: PladiasServer.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_jisty' +
+        url: httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_jisty' +
             '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     preprintNejisty: new VectorLayer({
         format: new GeoJSON(),
-        url:PladiasServer.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_nejisty' +
+        url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_nejisty' +
             '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     preprintCommon: new VectorLayer({
         format: new GeoJSON(),
-        url:PladiasServer.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_common' +
+        url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_common' +
             '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     preprintCommonRecent: new VectorLayer({
         format: new GeoJSON(),
-        url:PladiasServer.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_common_recent' +
+        url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_common_recent' +
             '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     preprintCommonZanik: new VectorLayer({
         format: new GeoJSON(),
-        url:PladiasServer.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_common_zanik' +
+        url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_common_zanik' +
             '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     preprintHerb: new VectorLayer({
         format: new GeoJSON(),
-        url:PladiasServer.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_herb' +
+        url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_herb' +
             '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     preprintNeherb: new VectorLayer({
         format: new GeoJSON(),
-        url:PladiasServer.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_neherb' +
+        url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_neherb' +
             '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     preprintPestovany: new VectorLayer({
         format: new GeoJSON(),
-        url:PladiasServer.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_pestovany' +
+        url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_pestovany' +
             '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     preprintPuvodni: new VectorLayer({
         format: new GeoJSON(),
-        url:PladiasServer.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_puvodni' +
+        url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_puvodni' +
             '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     preprintNepuvodni: new VectorLayer({
         format: new GeoJSON(),
-        url:PladiasServer.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_nepuvodni' +
+        url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_nepuvodni' +
             '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     preprintNeurceny: new VectorLayer({
         format: new GeoJSON(),
-        url:PladiasServer.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_neurceny' +
+        url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_neurceny' +
             '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     preprintRecent: new VectorLayer({
         format: new GeoJSON(),
-        url:PladiasServer.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_recent' +
+        url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_recent' +
             '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
     preprintZanik: new VectorLayer({
         format: new GeoJSON(),
-        url:PladiasServer.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_zanik' +
+        url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_zanik' +
             '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: loadingStrategy.bbox,
-        projection: PladiasMap.projection.client
+        projection: PladiasMap.projection.OL
     }),
 
 };
@@ -771,19 +527,19 @@ PladiasMap.vectorSources = {
 PladiasMap.vectorCallbacks = {
     loadSquares: function (response) {
         var format = new GeoJSON();
-        PladiasMap.vectorSources.squares.addFeatures(format.readFeatures(response, {featureProjection: PladiasMap.projection.client}));
+        PladiasMap.vectorSources.squares.addFeatures(format.readFeatures(response, {featureProjection: PladiasMap.projection.OL}));
     },
     loadRegions: function (response) {
         var format = new GeoJSON();
-        PladiasMap.vectorSources.regions.addFeatures(format.readFeatures(response, {featureProjection: PladiasMap.projection.client}));
+        PladiasMap.vectorSources.regions.addFeatures(format.readFeatures(response, {featureProjection: PladiasMap.projection.OL}));
     },
     loadNeurceny: function (response) {
         var format = new GeoJSON();
-        PladiasMap.vectorSources.neurceny.addFeatures(format.readFeatures(response, {featureProjection: PladiasMap.projection.client}));
+        PladiasMap.vectorSources.neurceny.addFeatures(format.readFeatures(response, {featureProjection: PladiasMap.projection.OL}));
     },
     loadJisty: function (response) {
         var format = new GeoJSON();
-        PladiasMap.vectorSources.jisty.addFeatures(format.readFeatures(response, {featureProjection: PladiasMap.projection.client}));
+        PladiasMap.vectorSources.jisty.addFeatures(format.readFeatures(response, {featureProjection: PladiasMap.projection.OL}));
     },
 };
 
