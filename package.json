@@ -14,7 +14,7 @@
     "pladias, flora, geoservice"
   ],
   "author": "Petr Novotný",
-  "license": "GNU 3",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/krkabol/pladias-geoservices/issues"
   },
