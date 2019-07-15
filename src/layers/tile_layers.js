@@ -1,9 +1,10 @@
 import geoserver from "../geo/geoserver";
-import {commonStyles} from "../style/styles";
-import PladiasMap from "../index";
 import {polygons as polygons} from "../geo/known_polygons";
+import TileLayer from "ol/layer/Tile";
+import TileWMS from "ol/source/TileWMS";
+import OSM from "ol/source/OSM";
 
-const layers = {
+export const layers = {
     osm: function (visibility) {
         return new TileLayer({
             title: 'Základní',
@@ -11,7 +12,7 @@ const layers = {
             id: 'base_OSM',
             type: 'base',
             visible: visibility,
-            source: new OSMSource()
+            source: new OSM()
         });
     },
     zm25: function (visibility) {
@@ -98,9 +99,7 @@ export const layersByProject = function (visibility, projectId, projectName, tax
     });
 };
 
-
-
-PladiasMap.layersByTaxon = {
+export const layersByTaxon = {
     semafor: function (visibility, taxonId) {
         return new TileLayer({
             name: "Záznamy přivázané ke kvadrantu",

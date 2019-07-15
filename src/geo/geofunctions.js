@@ -18,28 +18,28 @@ const Geofunctions = {
     convertDMSFormat: function (coordinate, type) {
         let coords = [];
 
-        let abscoordinate = Math.abs(coordinate)
-        let coordinatedegrees = Math.floor(abscoordinate);
+        let absCoordinate = Math.abs(coordinate)
+        let coordinateDegrees = Math.floor(absCoordinate);
 
-        let coordinateminutes = (abscoordinate - coordinatedegrees) / (1 / 60);
-        let tempcoordinateminutes = coordinateminutes;
-        coordinateminutes = Math.floor(coordinateminutes);
-        let coordinateseconds = (tempcoordinateminutes - coordinateminutes) / (1 / 60);
-        coordinateseconds = Math.round(coordinateseconds * 10);
-        coordinateseconds /= 10;
+        let coordinateMinutes = (absCoordinate - coordinateDegrees) / (1 / 60);
+        let tempCoordinateMinutes = coordinateMinutes;
+        coordinateMinutes = Math.floor(coordinateMinutes);
+        let coordinateSeconds = (tempCoordinateMinutes - coordinateMinutes) / (1 / 60);
+        coordinateSeconds = Math.round(coordinateSeconds * 10);
+        coordinateSeconds /= 10;
 
-        if (coordinatedegrees < 10)
-            coordinatedegrees = "0" + coordinatedegrees;
+        if (coordinateDegrees < 10)
+            coordinateDegrees = "0" + coordinateDegrees;
 
-        if (coordinateminutes < 10)
-            coordinateminutes = "0" + coordinateminutes;
+        if (coordinateMinutes < 10)
+            coordinateMinutes = "0" + coordinateMinutes;
 
-        if (coordinateseconds < 10)
-            coordinateseconds = "0" + coordinateseconds;
+        if (coordinateSeconds < 10)
+            coordinateSeconds = "0" + coordinateSeconds;
 
-        coords[0] = coordinatedegrees;
-        coords[1] = coordinateminutes;
-        coords[2] = coordinateseconds;
+        coords[0] = coordinateDegrees;
+        coords[1] = coordinateMinutes;
+        coords[2] = coordinateSeconds;
         coords[3] = this.getHemi(coordinate, type);
 
         return coords[0] + "°" + coords[1] + "\'" + coords[2] + "\"" + coords[3];
@@ -68,6 +68,9 @@ const Geofunctions = {
         let col = Math.round((6 * lon) - 34.5);
         return row + '' + col;
     },
+    roundCoord: function (coord) {
+        return Math.round(coord * 1000) / 1000;
+    }
 };
 
 export default Geofunctions;

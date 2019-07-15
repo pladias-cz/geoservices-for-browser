@@ -2,6 +2,9 @@
   "name": "pladias-geoservices",
   "version": "0.0.1",
   "description": "A library enybling using WMS/WFS services provided by geoserver.pladias.ibot.cas.cz",
+  "//": [
+    "Not yet tested neither ready for using.",
+    "Be patient." ],
   "main": "dist/index.js",
   "scripts": {
     "build": "webpack --mode production"
@@ -11,7 +14,7 @@
     "url": "git+https://github.com/krkabol/pladias-geoservices.git"
   },
   "keywords": [
-    "pladias, flora, geoservice"
+    "pladias, flora, geoservice, wms, wfs, openlayers"
   ],
   "author": "Petr Novotný",
   "license": "GPL-3.0",

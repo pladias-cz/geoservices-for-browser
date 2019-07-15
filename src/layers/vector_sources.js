@@ -1,16 +1,21 @@
 /**
  * TODO - replace JQuery with naja.js
- * TODO PladiasMap.taxon
  */
 
 import * as httpHelper from "../common/http_helpers";
-import PladiasMap from "../index";
-import {paths} from "../geo/geoserver";
-import loadingStrategy from "ol/loadingStrategy";
-import {projection} from "../geo/projections";
+import paths from "../geo/geoserver";
+import {bbox as defaultStrategy} from "ol/loadingstrategy";
+import projection from "../geo/projections";
 import {polygons} from "../geo/known_polygons";
+import GeoJSON from "ol/format/GeoJSON";
+import VectorSource from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
 
-const defaultStrategy = loadingStrategy.bbox;
+/**
+ * TODO this is hacking value of Taxon-ID
+ */
+const taxon = 5;
+
 
 const vectorSources = {
     squares: new VectorSource({
@@ -67,7 +72,7 @@ const vectorSources = {
                     TYPENAME: 'vektor:neurceny',
                     OUTPUTFORMAT: 'text/javascript',
                     FORMAT_OPTIONS: 'callback:PladiasMap.vectorCallbacks.loadNeurceny',
-                    VIEWPARAMS: 'TAXON_ID:' + PladiasMap.taxon
+                    VIEWPARAMS: 'TAXON_ID:' + taxon
                 },
                 dataType: 'jsonp'
             });
@@ -88,7 +93,7 @@ const vectorSources = {
                     TYPENAME: 'vektor:jisty',
                     OUTPUTFORMAT: 'text/javascript',
                     FORMAT_OPTIONS: 'callback:PladiasMap.vectorCallbacks.loadJisty',
-                    VIEWPARAMS: 'TAXON_ID:' + PladiasMap.taxon
+                    VIEWPARAMS: 'TAXON_ID:' + taxon
                 },
                 dataType: 'jsonp'
             });
@@ -99,7 +104,7 @@ const vectorSources = {
     preprintJisty: new VectorLayer({
         format: new GeoJSON(),
         url: httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_jisty' +
-            '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
+            '&viewparams=TAXON_ID:' + taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: defaultStrategy,
         projection: projection.OL
@@ -107,7 +112,7 @@ const vectorSources = {
     preprintNejisty: new VectorLayer({
         format: new GeoJSON(),
         url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_nejisty' +
-            '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
+            '&viewparams=TAXON_ID:' + taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: defaultStrategy,
         projection: projection.OL
@@ -115,7 +120,7 @@ const vectorSources = {
     preprintCommon: new VectorLayer({
         format: new GeoJSON(),
         url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_common' +
-            '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
+            '&viewparams=TAXON_ID:' + taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: defaultStrategy,
         projection: projection.OL
@@ -123,7 +128,7 @@ const vectorSources = {
     preprintCommonRecent: new VectorLayer({
         format: new GeoJSON(),
         url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_common_recent' +
-            '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
+            '&viewparams=TAXON_ID:' + taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: defaultStrategy,
         projection: projection.OL
@@ -131,7 +136,7 @@ const vectorSources = {
     preprintCommonZanik: new VectorLayer({
         format: new GeoJSON(),
         url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_common_zanik' +
-            '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
+            '&viewparams=TAXON_ID:' + taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: defaultStrategy,
         projection: projection.OL
@@ -139,7 +144,7 @@ const vectorSources = {
     preprintHerb: new VectorLayer({
         format: new GeoJSON(),
         url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_herb' +
-            '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
+            '&viewparams=TAXON_ID:' + taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: defaultStrategy,
         projection: projection.OL
@@ -147,7 +152,7 @@ const vectorSources = {
     preprintNeherb: new VectorLayer({
         format: new GeoJSON(),
         url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_neherb' +
-            '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
+            '&viewparams=TAXON_ID:' + taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: defaultStrategy,
         projection: projection.OL
@@ -155,7 +160,7 @@ const vectorSources = {
     preprintPestovany: new VectorLayer({
         format: new GeoJSON(),
         url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_pestovany' +
-            '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
+            '&viewparams=TAXON_ID:' + taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: defaultStrategy,
         projection: projection.OL
@@ -163,7 +168,7 @@ const vectorSources = {
     preprintPuvodni: new VectorLayer({
         format: new GeoJSON(),
         url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_puvodni' +
-            '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
+            '&viewparams=TAXON_ID:' + taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: defaultStrategy,
         projection: projection.OL
@@ -171,7 +176,7 @@ const vectorSources = {
     preprintNepuvodni: new VectorLayer({
         format: new GeoJSON(),
         url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_nepuvodni' +
-            '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
+            '&viewparams=TAXON_ID:' + taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: defaultStrategy,
         projection: projection.OL
@@ -179,7 +184,7 @@ const vectorSources = {
     preprintNeurceny: new VectorLayer({
         format: new GeoJSON(),
         url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_neurceny' +
-            '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
+            '&viewparams=TAXON_ID:' + taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: defaultStrategy,
         projection: projection.OL
@@ -187,7 +192,7 @@ const vectorSources = {
     preprintRecent: new VectorLayer({
         format: new GeoJSON(),
         url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_recent' +
-            '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
+            '&viewparams=TAXON_ID:' + taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: defaultStrategy,
         projection: projection.OL
@@ -195,7 +200,7 @@ const vectorSources = {
     preprintZanik: new VectorLayer({
         format: new GeoJSON(),
         url:httpHelper.getAppBasePath() + '/geoserver2/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=public:preprint_zanik' +
-            '&viewparams=TAXON_ID:' + PladiasMap.taxon + '&outputFormat=application/json',
+            '&viewparams=TAXON_ID:' + taxon + '&outputFormat=application/json',
         serverType: 'geoserver',
         strategy: defaultStrategy,
         projection: projection.OL

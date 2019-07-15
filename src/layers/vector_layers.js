@@ -1,5 +1,6 @@
 import {commonStyles, preprintStyles, styleFunction} from "../style/styles";
 import vectorSources from "./vector_sources";
+import VectorLayer from "ol/layer/Vector";
 
 export const layers = {
     regionsVector: function (visibility) {
