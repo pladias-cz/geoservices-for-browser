@@ -10,6 +10,7 @@ import {polygons} from "../geo/known_polygons";
 import GeoJSON from "ol/format/GeoJSON";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
+import {bbox as bboxStrategy} from 'ol/loadingstrategy.js';
 import $ from 'jquery';
 
 /**
@@ -37,6 +38,15 @@ const vectorSources = {
             });
         },
         strategy: defaultStrategy,
+        projection: projection.OL
+    }),
+    squares2: new VectorSource({
+        format: new GeoJSON(),
+        url: function(extent) {
+            return 'https://geoserver.ibot.cas.cz/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=shared:squares&outputFormat=application%2Fjson&srsname=EPSG:3857&' +
+                'bbox=' + extent.join(',') + ',EPSG:3857';
+        },
+        strategy: bboxStrategy,
         projection: projection.OL
     }),
     regions: new VectorSource({

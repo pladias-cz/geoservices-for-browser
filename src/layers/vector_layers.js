@@ -1,13 +1,6 @@
 import {commonStyles, preprintStyles, styleFunction} from "../style/styles";
 import vectorSources from "./vector_sources";
 import VectorLayer from "ol/layer/Vector";
-import VectorSource from "ol/source/Vector";
-import GeoJSON from "ol/format/GeoJSON";
-import $ from "jquery";
-import paths from "../geo/geoserver";
-import {bbox as defaultStrategy} from "ol/loadingstrategy";
-import projection from "../geo/projections";
-import FeatureFormat from "ol/format/Feature";
 
 export const layers = {
     regionsVector: function (visibility) {
@@ -25,7 +18,7 @@ export const layers = {
             name: 'Čtvercová síť',
             id: 'technical_squares',
             visible: visibility,
-            source: vectorSources.squares,
+            source: vectorSources.squares2,
             style: commonStyles.squares
         });
     },
