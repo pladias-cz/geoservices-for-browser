@@ -10,6 +10,7 @@ export const styleFunction = {
         return commonStyles[name](radius);
     },
     getSquareText: function (feature, resolution) {
+        console.log(feature);
         let text = feature.get('id').toString();
         if (resolution > 300) {
             text = '';
