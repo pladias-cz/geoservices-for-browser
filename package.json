@@ -1,7 +1,7 @@
 {
   "name": "pladias-geoservices",
   "version": "0.0.1",
-  "description": "A library enybling using WMS/WFS services provided by geoserver.pladias.ibot.cas.cz",
+  "description": "A library enabling using WMS/WFS services provided by geoserver.ibot.cas.cz",
   "//": [
     "Not yet tested neither ready for using.",
     "Be patient." ],
