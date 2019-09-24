@@ -19,8 +19,8 @@ export const layers = {
             id: 'technical_squares',
             visible: visibility,
             source: vectorSources.squares2,
-            style: function (feature, resolution){
-                commonStyles.squares(feature, resolution)
+            style: function (feature, resolution) {
+                return commonStyles.squares(feature, resolution)
             }
         });
     },
