@@ -10,7 +10,7 @@ import {polygons} from "../geo/known_polygons";
 import GeoJSON from "ol/format/GeoJSON";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
-
+import $ from 'jquery';
 /**
  * TODO this is hacking value of Taxon-ID
  */
