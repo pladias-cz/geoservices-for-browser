@@ -23,6 +23,20 @@ export const layers = {
         });
 
     },
+    squaresNoCallbackVector: function (visibility) {
+        return new VectorLayer({
+            name: 'Čtvercová síť',
+            id: 'technical_squares',
+            visible: visibility,
+            // source: new VectorSource({
+            //     url: 'https://geoserver.ibot.cas.cz/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=shared:squares&outputFormat=application%2Fjson',
+            //     format: new GeoJSON()
+            // }),
+            source: vectorSources.squaresNoCallback,
+            style: commonStyles.squares
+        });
+
+    },
 
 };
 

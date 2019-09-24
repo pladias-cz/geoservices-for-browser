@@ -38,6 +38,25 @@ const vectorSources = {
         strategy: defaultStrategy,
         projection: projection.OL
     }),
+    squaresNoCallback: new VectorSource({
+        format: new GeoJSON(),
+        loader: function (extent, resolution, projection) {
+            $.ajax({
+                type: 'GET',
+                url: paths.common_wfs,
+                data: {
+                    SERVICE: 'WFS',
+                    VERSION: '1.0.0',
+                    REQUEST: 'GetFeature',
+                    TYPENAME: 'commonStyles:squares',
+                    OUTPUTFORMAT: 'application/json'
+                },
+                dataType: 'jsonp'
+            });
+        },
+        strategy: defaultStrategy,
+        projection: projection.OL
+    }),
     regions: new VectorSource({
         format: new GeoJSON(),
         loader: function (extent, resolution, projection) {
