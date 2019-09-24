@@ -24,7 +24,7 @@ export function getProtocol() {
 }
 
 export function getGeoBasePath(){
-    return getProtocol() + '//' + getHost() + ":" + getProtocol();
+    return getProtocol() + '//' + getHost() + ":" + getPort();
 }
 
 export function getAppBasePath() {
