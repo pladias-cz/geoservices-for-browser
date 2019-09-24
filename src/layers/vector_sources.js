@@ -40,22 +40,23 @@ const vectorSources = {
     }),
     squaresNoCallback: new VectorSource({
         format: new GeoJSON(),
-        loader: function (extent, resolution, projection) {
-            $.ajax({
-                type: 'GET',
-                url: paths.common_wfs,
-                data: {
-                    SERVICE: 'WFS',
-                    VERSION: '1.0.0',
-                    REQUEST: 'GetFeature',
-                    TYPENAME: 'commonStyles:squares',
-                    OUTPUTFORMAT: 'application/json'
-                },
-                dataType: 'jsonp'
-            });
-        },
-        strategy: defaultStrategy,
-        projection: projection.OL
+        url: "https://geoserver.ibot.cas.cz/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=shared:squares&outputFormat=application%2Fjson",
+        // loader: function (extent, resolution, projection) {
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: paths.common_wfs,
+        //         data: {
+        //             SERVICE: 'WFS',
+        //             VERSION: '1.0.0',
+        //             REQUEST: 'GetFeature',
+        //             TYPENAME: 'commonStyles:squares',
+        //             OUTPUTFORMAT: 'application/json'
+        //         },
+        //         dataType: 'jsonp'
+        //     });
+        // },
+        // strategy: defaultStrategy,
+        // projection: projection.OL
     }),
     regions: new VectorSource({
         format: new GeoJSON(),
