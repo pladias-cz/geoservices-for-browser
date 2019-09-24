@@ -11,6 +11,7 @@ import GeoJSON from "ol/format/GeoJSON";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import $ from 'jquery';
+
 /**
  * TODO this is hacking value of Taxon-ID
  */
@@ -37,26 +38,6 @@ const vectorSources = {
         },
         strategy: defaultStrategy,
         projection: projection.OL
-    }),
-    squaresNoCallback: new VectorSource({
-        format: new GeoJSON(),
-        url: "https://geoserver.ibot.cas.cz/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=shared:squares&outputFormat=application%2Fjson",
-        // loader: function (extent, resolution, projection) {
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: paths.common_wfs,
-        //         data: {
-        //             SERVICE: 'WFS',
-        //             VERSION: '1.0.0',
-        //             REQUEST: 'GetFeature',
-        //             TYPENAME: 'commonStyles:squares',
-        //             OUTPUTFORMAT: 'application/json'
-        //         },
-        //         dataType: 'jsonp'
-        //     });
-        // },
-        // strategy: defaultStrategy,
-        // projection: projection.OL
     }),
     regions: new VectorSource({
         format: new GeoJSON(),

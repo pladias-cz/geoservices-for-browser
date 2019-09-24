@@ -1,6 +1,13 @@
 import {commonStyles, preprintStyles, styleFunction} from "../style/styles";
 import vectorSources from "./vector_sources";
 import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import GeoJSON from "ol/format/GeoJSON";
+import $ from "jquery";
+import paths from "../geo/geoserver";
+import {bbox as defaultStrategy} from "ol/loadingstrategy";
+import projection from "../geo/projections";
+import FeatureFormat from "ol/format/Feature";
 
 export const layers = {
     regionsVector: function (visibility) {
@@ -21,21 +28,6 @@ export const layers = {
             source: vectorSources.squares,
             style: commonStyles.squares
         });
-
-    },
-    squaresNoCallbackVector: function (visibility) {
-        return new VectorLayer({
-            name: 'Čtvercová síť',
-            id: 'technical_squares',
-            visible: visibility,
-            // source: new VectorSource({
-            //     url: 'https://geoserver.ibot.cas.cz/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=shared:squares&outputFormat=application%2Fjson',
-            //     format: new GeoJSON()
-            // }),
-            source: vectorSources.squaresNoCallback,
-            style: commonStyles.squares
-        });
-
     },
 
 };
