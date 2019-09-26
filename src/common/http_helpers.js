@@ -8,23 +8,11 @@ export function redirect(url, timeout=0) {
     }, timeout);
 }
 
-export function getHost() {
-    return location.hostname;
-}
-
-export function getPort() {
-    if (""===location.port){
-        return "80";
-    }
-    return location.port;
-}
-
-export function getProtocol() {
-    return location.protocol;
-}
-
 export function getGeoBasePath(){
-    return getProtocol() + '//' + getHost() + ":" + getPort();
+    if (""===location.port){
+       return  location.protocol + '//' + location.hostname;
+    }
+    return  location.protocol + '//' + location.hostname + ":" + location.port;
 }
 
 export function getAppBasePath() {

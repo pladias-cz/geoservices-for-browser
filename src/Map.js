@@ -7,17 +7,22 @@ import VectorSource from "ol/source/Vector";
 import projection from "./geo/projections";
 import VectorLayer from "ol/layer/Vector";
 import Collection from "ol/Collection";
-import {Fill, Stroke, Style} from "ol/style";
 import $ from "jquery";
+import {commonStyles} from "./style/styles"
+import {layers} from "./layers/vector_layers";
 
-class Map {
-    constructor(taxonId, DOMelement) {
+class PladiasMap {
+    constructor(olMap,taxonId) {
         this.taxonId = taxonId;
-        this.DOMelement = DOMelement;
+        this.olMap = olMap;
     }
 
     getTaxonId() {
         return this.taxonId;
+    }
+
+    getOLMap() {
+        return this.olMap;
     }
 
     drawCircleInMeter(radius) {
@@ -45,33 +50,13 @@ class Map {
         //vector square handling
         let collection = new Collection();
         const featureOverlay = new VectorLayer({
-            map: this.DOMelement,
+            map: this.olMap,
             source: new VectorSource({
                 features: collection,
                 useSpatialIndex: false // optional, might improve performance
             }),
             style: function (feature, resolution) {
-                let text = resolution < 5000 ? feature.get('name') : '';
-                if (!highlightStyleCache[text]) {
-                    highlightStyleCache[text] = [new Style({
-                        stroke: new Stroke({
-                            color: '#f00',
-                            width: 1
-                        }),
-                        text: new TextStyle({
-                            font: '12px Calibri,sans-serif',
-                            text: text,
-                            fill: new Fill({
-                                color: '#000'
-                            }),
-                            stroke: new Stroke({
-                                color: '#f00',
-                                width: 3
-                            })
-                        })
-                    })];
-                }
-                return highlightStyleCache[text];
+                return commonStyles.highlight(feature, resolution);
             },
             updateWhileAnimating: true, // optional, for instant visual feedback
             updateWhileInteracting: true // optional, for instant visual feedback
@@ -80,17 +65,17 @@ class Map {
         let highlight;
 
         const displayFeatureInfo = function (pixel) {
-
-            let feature = this.DOMelement.forEachFeatureAtPixel(pixel, function (feature, layer) {
+            // let layer = this.olMap.getLayer(layers.squaresVector().get('name'));
+            let feature = this.olMap.forEachFeatureAtPixel(pixel, function (feature, layer) {
                 return feature;
             });
 
-            let info = document.getElementById('square-hover');
-            if (feature) {
-                info.innerHTML = 'pole ' + feature.get('id');//feature.getId() + ': ' + feature.get('id');
-            } else {
-                info.innerHTML = '&nbsp;';
-            }
+            // let info = document.getElementById('square-hover');
+            // if (feature) {
+            //     info.innerHTML = 'pole ' + feature.get('id');//feature.getId() + ': ' + feature.get('id');
+            // } else {
+            //     info.innerHTML = '&nbsp;';
+            // }
             if (feature !== highlight) {
                 if (highlight) {
                     featureOverlay.getSource().removeFeature(highlight);
@@ -102,10 +87,23 @@ class Map {
             }
 
         };
-        $(this.DOMelement.getViewport()).on('mousemove', function (evt) {
-            let pixel = this.DOMelement.getEventPixel(evt.originalEvent);
+
+        this.olMap.on('pointermove', function(evt) {
+            if (evt.dragging) {
+                return;
+            }
+            let pixel = map.getEventPixel(evt.originalEvent);
             displayFeatureInfo(pixel);
         });
+
+        this.olMap.on('click', function(evt) {
+            displayFeatureInfo(evt.pixel);
+        });
+
+        // this.olMap.getViewport().on('mousemove', function (evt) {
+        //     let pixel = this.olMap.getEventPixel(evt.originalEvent);
+        //     displayFeatureInfo(pixel);
+        // });
 
     }
 

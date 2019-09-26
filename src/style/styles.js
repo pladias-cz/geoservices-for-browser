@@ -1,6 +1,5 @@
-import {Circle as CircleStyle, Style, Text} from "ol/style";
+import {Circle as CircleStyle, Style, Text,Fill, Stroke} from "ol/style";
 import colors from "./colors";
-
 
 export const styleFunction = {
     countRadius: function (zoom, correction, min) {
@@ -11,6 +10,7 @@ export const styleFunction = {
     },
     getSquareText: function (feature, resolution) {
         let text = feature.getId().split('.')[1];
+        //feature.get('name') kdyby wfs odpověď toto obsahovala
         if (resolution > 300) {
             text = '';
         }
@@ -46,10 +46,27 @@ export const commonStyles =
             });
         },
 
-        regions: function (feature, resolution) {
-            //https://openlayers.org/en/latest/examples/vector-labels.html
+        highlight: function (feature, resolution) {
+            let text = resolution < 5000 ? styleFunction.getSquareText(feature, resolution) : '';
             return new Style({
-                stroke: colors.stroke.regions
+                stroke: new Stroke({
+                    color: '#f00',
+                    width: 1
+                }),
+                fill: new Fill({
+                    color: 'rgba(255,0,0,0.1)'
+                }),
+                text: new Text({
+                    font: '12px Calibri,sans-serif',
+                    text: text,
+                    fill: new Fill({
+                        color: '#000'
+                    }),
+                    stroke: new Stroke({
+                        color: '#f00',
+                        width: 3
+                    })
+                })
             });
         },
     };
