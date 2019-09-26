@@ -37,16 +37,13 @@ export const commonStyles =
                 })
             });
         },
-        squares: function (feature, resolution) {
-            //https://openlayers.org/en/latest/examples/vector-labels.html
-            return new Style({
+        squares:  new Style({
                 stroke: colors.stroke.squares,
                 text: new Text({
                     font: '12px sans-serif',
                     fill: colors.text.black
                 })
-            });
-        },
+            }),
 
         highlight: function (feature, resolution) {
             let text = resolution < 5000 ? styleFunction.getSquareText(feature, resolution) : '';
