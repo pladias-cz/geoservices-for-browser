@@ -9,8 +9,7 @@ export const styleFunction = {
         return commonStyles[name](radius);
     },
     getSquareText: function (feature, resolution) {
-        // let text = feature.getId().split('.')[1];
-        let text = feature.get('name');
+        let text = feature.get('name')+'';
         if (resolution > 300) {
             text = '';
         }
