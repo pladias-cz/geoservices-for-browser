@@ -45,36 +45,23 @@ export class PladiasMap {
     }
 
     highlightSquare() {
+        //https://openlayers.org/en/latest/examples/vector-layer.html
         const map = this.getOLMap();
-        //vector square handling
-        let collection = new Collection();
         const featureOverlay = new VectorLayer({
             map: map,
-            source: new VectorSource({
-                features: collection,
-                useSpatialIndex: false // optional, might improve performance
-            }),
+            source: new VectorSource(),
             style: function (feature, resolution) {
                 return commonStyles.highlight(feature, resolution);
-            },
-            updateWhileAnimating: true, // optional, for instant visual feedback
-            updateWhileInteracting: true // optional, for instant visual feedback
+            }
         });
 
         let highlight;
 
         const displayFeatureInfo = function (pixel) {
-            // let layer = this.olMap.getLayer(layers.squaresVector().get('name'));
-            let feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+            let feature = map.forEachFeatureAtPixel(pixel, function (feature) {
                 return feature;
             });
 
-            // let info = document.getElementById('square-hover');
-            // if (feature) {
-            //     info.innerHTML = 'pole ' + feature.get('id');//feature.getId() + ': ' + feature.get('id');
-            // } else {
-            //     info.innerHTML = '&nbsp;';
-            // }
             if (feature !== highlight) {
                 if (highlight) {
                     featureOverlay.getSource().removeFeature(highlight);
@@ -94,16 +81,9 @@ export class PladiasMap {
             let pixel = map.getEventPixel(evt.originalEvent);
             displayFeatureInfo(pixel);
         });
-
         map.on('click', function(evt) {
             displayFeatureInfo(evt.pixel);
         });
-
-        // this.olMap.getViewport().on('mousemove', function (evt) {
-        //     let pixel = this.olMap.getEventPixel(evt.originalEvent);
-        //     displayFeatureInfo(pixel);
-        // });
-
     }
 
     fit2card() {
