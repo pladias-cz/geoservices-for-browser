@@ -1,6 +1,9 @@
 import {commonStyles, preprintStyles, styleFunction} from "../style/styles";
 import vectorSources from "./vector_sources";
 import VectorLayer from "ol/layer/Vector";
+import {Text} from "ol/style";
+import colors from "../style/colors";
+import {textHeights} from "ol/render/canvas";
 
 export const layers = {
     regionsVector: function (visibility) {
@@ -20,7 +23,12 @@ export const layers = {
             visible: visibility,
             source: vectorSources.squares,
             style: function (feature, resolution) {
-                return commonStyles.squares(feature, resolution)
+                let text = '';
+                if (resolution < 300) {
+                    text = feature.get('name')+'';
+                }
+                commonStyles.squares.getText().setText(text);
+                return commonStyles.squares;
             }
         });
     },

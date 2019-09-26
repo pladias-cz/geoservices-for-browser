@@ -41,7 +41,10 @@ export const commonStyles =
             //https://openlayers.org/en/latest/examples/vector-labels.html
             return new Style({
                 stroke: colors.stroke.squares,
-                text: styleFunction.getSquareText(feature, resolution)
+                text: new Text({
+                    font: '12px sans-serif',
+                    fill: colors.text.black
+                })
             });
         },
 
