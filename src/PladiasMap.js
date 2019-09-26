@@ -7,11 +7,9 @@ import VectorSource from "ol/source/Vector";
 import projection from "./geo/projections";
 import VectorLayer from "ol/layer/Vector";
 import Collection from "ol/Collection";
-import $ from "jquery";
 import {commonStyles} from "./style/styles"
-import {layers} from "./layers/vector_layers";
 
-class PladiasMap {
+export class PladiasMap {
     constructor(olMap,taxonId) {
         this.taxonId = taxonId;
         this.olMap = olMap;
@@ -47,10 +45,11 @@ class PladiasMap {
     }
 
     highlightSquare() {
+        const map = this.getOLMap();
         //vector square handling
         let collection = new Collection();
         const featureOverlay = new VectorLayer({
-            map: this.olMap,
+            map: map,
             source: new VectorSource({
                 features: collection,
                 useSpatialIndex: false // optional, might improve performance
@@ -66,7 +65,7 @@ class PladiasMap {
 
         const displayFeatureInfo = function (pixel) {
             // let layer = this.olMap.getLayer(layers.squaresVector().get('name'));
-            let feature = this.olMap.forEachFeatureAtPixel(pixel, function (feature, layer) {
+            let feature = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
                 return feature;
             });
 
@@ -88,7 +87,7 @@ class PladiasMap {
 
         };
 
-        this.olMap.on('pointermove', function(evt) {
+        map.on('pointermove', function(evt) {
             if (evt.dragging) {
                 return;
             }
@@ -96,7 +95,7 @@ class PladiasMap {
             displayFeatureInfo(pixel);
         });
 
-        this.olMap.on('click', function(evt) {
+        map.on('click', function(evt) {
             displayFeatureInfo(evt.pixel);
         });
 
@@ -108,7 +107,8 @@ class PladiasMap {
     }
 
     fit2card() {
-        this.DOMelement.height((this.DOMelement.closest('.resizeable').find('.card-block').height()) - 5);
+        let DOMElement =  this.getOLMap().getTargetElement();
+       DOMElement.height((DOMElement.closest('.resizeable').find('.card-block').height()) - 5);
     }
 
 }
