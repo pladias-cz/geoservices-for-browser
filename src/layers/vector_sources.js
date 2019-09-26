@@ -10,7 +10,6 @@ import {polygons} from "../geo/known_polygons";
 import GeoJSON from "ol/format/GeoJSON";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
-import {bbox as bboxStrategy} from 'ol/loadingstrategy.js';
 import $ from 'jquery';
 
 /**
@@ -55,7 +54,7 @@ const vectorSources = {
                     SERVICE: 'WFS',
                     VERSION: '1.0.0',
                     REQUEST: 'GetFeature',
-                    TYPENAME: 'vektor:neurceny',
+                    TYPENAME: 'neurceny',
                     OUTPUTFORMAT: 'text/javascript',
                     FORMAT_OPTIONS: 'callback:PladiasMap.vectorCallbacks.loadNeurceny',
                     VIEWPARAMS: 'TAXON_ID:' + taxon
@@ -76,7 +75,7 @@ const vectorSources = {
                     SERVICE: 'WFS',
                     VERSION: '1.0.0',
                     REQUEST: 'GetFeature',
-                    TYPENAME: 'vektor:jisty',
+                    TYPENAME: 'jisty',
                     OUTPUTFORMAT: 'text/javascript',
                     FORMAT_OPTIONS: 'callback:PladiasMap.vectorCallbacks.loadJisty',
                     VIEWPARAMS: 'TAXON_ID:' + taxon

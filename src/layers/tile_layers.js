@@ -123,7 +123,7 @@ export const layersByTaxon = {
             visible: visibility,
             source: new TileWMS({
                 url: geoserver.public_wfs,
-                params: {'LAYERS': 'vektor:semafor', 'TILED': true, 'viewparams': 'TAXON_ID:' + taxonId},
+                params: {'LAYERS': 'semafor', 'TILED': true, 'viewparams': 'TAXON_ID:' + taxonId},
                 serverType: 'geoserver'
             })
         });
@@ -254,6 +254,21 @@ export const layersByTaxon = {
                     'TILED': true,
                     'viewparams': 'TAXON_ID:' + taxonId
                 },
+                serverType: 'geoserver'
+            })
+        });
+    }
+};
+
+export const Dalibor = {
+    semaforPublic: function (visibility, taxonId) {
+        return new TileLayer({
+            name: "Záznamy přivázané ke kvadrantu",
+            id: 'technical_semafor',
+            visible: visibility,
+            source: new TileWMS({
+                url: geoserver.public_wfs,
+                params: {'LAYERS': 'semaforDalibor', 'TILED': true, 'viewparams': 'TAXON_ID:' + taxonId},
                 serverType: 'geoserver'
             })
         });

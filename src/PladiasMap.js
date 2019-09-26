@@ -6,7 +6,6 @@ import Feature from "ol/Feature";
 import VectorSource from "ol/source/Vector";
 import projection from "./geo/projections";
 import VectorLayer from "ol/layer/Vector";
-import Collection from "ol/Collection";
 import {commonStyles} from "./style/styles"
 
 export class PladiasMap {
@@ -41,11 +40,12 @@ export class PladiasMap {
             source: vectorSource
         });
 
-        this.DOMelement.addLayer(vectorLayer);
+        this.getOLMap().addLayer(vectorLayer);
     }
 
     highlightSquare() {
         //https://openlayers.org/en/latest/examples/vector-layer.html
+        //TODO nefunguje jak má - ke zvýraznění dojde, ale pouze po najetí na zobrazený popisek polygonu. Pokud je popisek skrytý, tak to jen náhodně reaguje při pohybu v okolí centroidu či nepravidelně i jinde
         const map = this.getOLMap();
         const featureOverlay = new VectorLayer({
             map: map,
