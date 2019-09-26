@@ -18,7 +18,7 @@ export const layers = {
             name: 'Čtvercová síť',
             id: 'technical_squares',
             visible: visibility,
-            source: vectorSources.squares2,
+            source: vectorSources.squares,
             style: function (feature, resolution) {
                 return commonStyles.squares(feature, resolution)
             }

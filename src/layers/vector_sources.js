@@ -22,32 +22,7 @@ const taxon = 5;
 const vectorSources = {
     squares: new VectorSource({
         format: new GeoJSON(),
-        loader: function (extent, resolution, projection) {
-            $.ajax({
-                type: 'GET',
-                url: paths.common_wfs,
-                data: {
-                    SERVICE: 'WFS',
-                    VERSION: '1.0.0',
-                    REQUEST: 'GetFeature',
-                    TYPENAME: 'commonStyles:squares',
-                    OUTPUTFORMAT: 'text/javascript',
-                    FORMAT_OPTIONS: 'callback:PladiasMap.vectorCallbacks.loadSquares'
-                },
-                dataType: 'jsonp'
-            });
-        },
-        strategy: defaultStrategy,
-        projection: projection.OL
-    }),
-    squares2: new VectorSource({
-        format: new GeoJSON(),
-        url: function(extent) {
-            return 'https://geoserver.ibot.cas.cz/public/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=shared:squares&outputFormat=application%2Fjson&srsname=EPSG:3857&' +
-                'bbox=' + extent.join(',') + ',EPSG:3857';
-        },
-        strategy: bboxStrategy,
-        projection: projection.OL
+        url: paths.common_wfs + '?service=WFS&version=1.0.0&request=GetFeature&typeName=common:squares&outputFormat=application%2Fjson'
     }),
     regions: new VectorSource({
         format: new GeoJSON(),
