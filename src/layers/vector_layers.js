@@ -23,7 +23,7 @@ export const layers = {
             visible: visibility,
             source: vectorSources.squares,
             style: function (feature, resolution) {
-                let text = '';
+                let text = ' ';
                 if (resolution < 300) {
                     text = feature.get('name')+'';
                 }

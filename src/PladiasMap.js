@@ -50,8 +50,8 @@ export class PladiasMap {
         const featureOverlay = new VectorLayer({
             map: map,
             source: new VectorSource(),
-            style: function (feature, resolution) {
-                return commonStyles.highlight(feature, resolution);
+            style: function () {
+                return commonStyles.highlight;
             }
         });
 

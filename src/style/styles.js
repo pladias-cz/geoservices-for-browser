@@ -45,29 +45,15 @@ export const commonStyles =
                 })
             }),
 
-        highlight: function (feature, resolution) {
-            let text = resolution < 5000 ? styleFunction.getSquareText(feature, resolution) : '';
-            return new Style({
+        highlight:  new Style({
                 stroke: new Stroke({
                     color: '#f00',
                     width: 1
                 }),
                 fill: new Fill({
                     color: 'rgba(255,0,0,0.1)'
-                }),
-                text: new Text({
-                    font: '12px Calibri,sans-serif',
-                    text: text,
-                    fill: new Fill({
-                        color: '#000'
-                    }),
-                    stroke: new Stroke({
-                        color: '#f00',
-                        width: 3
-                    })
                 })
-            });
-        },
+            })
     };
 
 export const preprintStyles = {
