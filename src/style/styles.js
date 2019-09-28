@@ -1,4 +1,4 @@
-import {Circle as CircleStyle, Style, Text,Fill, Stroke} from "ol/style";
+import {Circle as CircleStyle, Fill, Stroke, Style, Text} from "ol/style";
 import colors from "./colors";
 
 export const styleFunction = {
@@ -7,13 +7,6 @@ export const styleFunction = {
     },
     getStyle: function (name, radius = 1) {
         return commonStyles[name](radius);
-    },
-    getSquareText: function (feature, resolution) {
-        let text = feature.get('name')+'';
-        if (resolution > 300) {
-            text = '';
-        }
-        return new Text({text: text, font: '12px sans-serif', fill: colors.text.black});
     },
 };
 
@@ -37,33 +30,33 @@ export const commonStyles =
                 })
             });
         },
-        squares:  new Style({
-                stroke: colors.stroke.squares,
-            /** zde musí být uveden fill - nulová alfa není chyba! - jinak kurzor neví že je nad danou vrstvou - nefunguje highlight čtverce*/
-                fill: new Fill({
-                    color: 'rgba(255, 255, 255, 0)'
-                }),
-                text: new Text({
-                    font: '12px sans-serif',
-                    fill: colors.text.black
-                })
+        squares: new Style({
+            stroke: colors.stroke.squares,
+            /** do not remove fill, zero alpha is not a mistake, see src/PladiasMap.js:48 */
+            fill: new Fill({
+                color: 'rgba(255, 255, 255, 0)'
             }),
+            text: new Text({
+                font: '12px sans-serif',
+                fill: colors.text.black
+            })
+        }),
 
-        highlight:  new Style({
-                stroke: new Stroke({
-                    color: '#f00',
-                    width: 1
-                }),
-                fill: new Fill({
-                    color: 'rgba(255,0,0,0.1)'
-                }),
+        highlight: new Style({
+            stroke: new Stroke({
+                color: '#f00',
+                width: 1
+            }),
+            fill: new Fill({
+                color: 'rgba(255,0,0,0.1)'
+            }),
             text: new Text({
                 font: '12px Calibri,sans-serif',
                 fill: new Fill({
                     color: '#000'
                 })
             })
-            })
+        })
     };
 
 export const preprintStyles = {
