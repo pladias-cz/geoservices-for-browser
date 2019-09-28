@@ -39,6 +39,10 @@ export const commonStyles =
         },
         squares:  new Style({
                 stroke: colors.stroke.squares,
+            /** zde musí být uveden fill - nulová alfa není chyba! - jinak kurzor neví že je nad danou vrstvou - nefunguje highlight čtverce*/
+                fill: new Fill({
+                    color: 'rgba(255, 255, 255, 0)'
+                }),
                 text: new Text({
                     font: '12px sans-serif',
                     fill: colors.text.black
@@ -52,7 +56,13 @@ export const commonStyles =
                 }),
                 fill: new Fill({
                     color: 'rgba(255,0,0,0.1)'
+                }),
+            text: new Text({
+                font: '12px Calibri,sans-serif',
+                fill: new Fill({
+                    color: '#000'
                 })
+            })
             })
     };
 

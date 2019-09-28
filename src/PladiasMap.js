@@ -23,8 +23,9 @@ export class PladiasMap {
     }
 
     drawCircleInMeter(radius) {
+        let DOMElement =  this.getOLMap().getTargetElement();
         let circleRadius = (radius / METERS_PER_UNIT.m) * 2;
-        let center = this.DOMelement.getView().getCenter();
+        let center = DOMElement.getView().getCenter();
 
         let circle = new Circle(center, circleRadius);
         let circleFeature = new Feature(circle);
@@ -45,7 +46,7 @@ export class PladiasMap {
 
     highlightSquare() {
         //https://openlayers.org/en/latest/examples/vector-layer.html
-        //TODO nefunguje jak má - ke zvýraznění dojde, ale pouze po najetí na zobrazený popisek polygonu. Pokud je popisek skrytý, tak to jen náhodně reaguje při pohybu v okolí centroidu či nepravidelně i jinde
+        //TODO nefunguje jak má - ke zvýraznění dojde, ale pouze po najetí na zobrazený popisek polygonu. Pokud je popisek skrytý, tak to jen náhodně reaguje při pohybu v okolí centroidu či nepravidelně i jinde - už jsem odhalil příčinu, musí být stroke u té vrstvy, byť s nulovou alfakanálem - protože jinak se v tom míste nerenderuje a tak to nezachytí forEachFeatureAtPixel()..
         const map = this.getOLMap();
         const featureOverlay = new VectorLayer({
             map: map,
@@ -53,6 +54,11 @@ export class PladiasMap {
             style: function () {
                 return commonStyles.highlight;
             }
+            /** kdybych chtěl při highlight i něco vypisovat...*/
+            // style: function(feature) {
+            //     commonStyles.highlight.getText().setText(feature.get('name'));
+            //     return commonStyles.highlight;
+            // }
         });
 
         let highlight;

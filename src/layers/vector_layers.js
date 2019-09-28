@@ -25,7 +25,7 @@ export const layers = {
             style: function (feature, resolution) {
                 let text = ' ';
                 if (resolution < 300) {
-                    text = feature.get('name')+'';
+                    text = feature.get('name');
                 }
                 commonStyles.squares.getText().setText(text);
                 return commonStyles.squares;
