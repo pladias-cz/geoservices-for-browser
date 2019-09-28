@@ -4,7 +4,8 @@
   "description": "A library enabling using WMS/WFS services provided by geoserver.ibot.cas.cz",
   "//": [
     "Not yet tested neither ready for using.",
-    "Be patient." ],
+    "Be patient."
+  ],
   "main": "dist/index.js",
   "scripts": {
     "build": "webpack --mode production"
@@ -23,13 +24,13 @@
   },
   "homepage": "https://github.com/krkabol/pladias-geoservices#readme",
   "dependencies": {
-    "ol": "5.3.2",
+    "ol": "6.0.0",
     "jquery": "^3.4.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
+    "@babel/core": "^7.6.2",
     "babel-loader": "^8.0.5",
-    "webpack": "^4.28.4",
-    "webpack-cli": "^3.2.1"
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9"
   }
 }
