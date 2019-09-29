@@ -8,6 +8,8 @@ import projection from "./geo/projections";
 import VectorLayer from "ol/layer/Vector";
 import {commonStyles} from "./style/styles"
 
+import "ol/ol.css";
+
 export class PladiasMap {
     constructor(olMap, taxonId) {
         this.taxonId = taxonId;
@@ -89,9 +91,9 @@ export class PladiasMap {
             let pixel = map.getEventPixel(evt.originalEvent);
             displayFeatureInfo(pixel);
         });
-        map.on('click', function (evt) {
-            displayFeatureInfo(evt.pixel);
-        });
+        // map.on('click', function (evt) {
+        //     displayFeatureInfo(evt.pixel);
+        // });
     }
 
     fit2card() {
