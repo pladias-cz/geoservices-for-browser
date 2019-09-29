@@ -19,9 +19,15 @@ export const layers = {
             id: 'technical_squares',
             visible: visibility,
             source: vectorSources.squares,
-            style: commonStyles.squares
+            style: function (feature, resolution) {
+                let text = ' ';
+                if (resolution < 300) {
+                    text = feature.get('name');
+                }
+                commonStyles.squares.getText().setText(text);
+                return commonStyles.squares;
+            }
         });
-
     },
 
 };

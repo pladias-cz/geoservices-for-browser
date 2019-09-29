@@ -4,8 +4,8 @@ const colors = {
     stroke: {
         jisty: new Stroke({color: '#000000', width: 0}),
         neurceny: new Stroke({color: 'rgba(200, 200, 200, 1)', width: 1}),
-        squares: new Stroke({color: 'blue',width: 1}),
-        regions: new Stroke({color: 'rgba(110, 67, 2, 0.7)',width: 2})
+        squares: new Stroke({color: '#319FD3', width: 1}),
+        regions: new Stroke({color: 'rgba(110, 67, 2, 0.7)', width: 2})
     },
     fill: {
         jisty: new Fill({color: '#000000'}),
