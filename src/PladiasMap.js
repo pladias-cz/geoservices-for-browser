@@ -57,7 +57,7 @@ export class PladiasMap {
         return this;
     }
 
-    highlightSquare(infoElement) {
+    highlightSquare(infoElement = null) {
         /** https://openlayers.org/en/latest/examples/vector-layer.html
          * to work well, there must be fill in style of squaresLayer, even with zero Alpha-channel, otherwise it does not render and function forEachFeatureAtPixel() cannot catch its existence.. */
         const map = this.getOLMap();
