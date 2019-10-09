@@ -1,6 +1,7 @@
 'use strict';
 import projection from "./geo/projections";
 import Geofunctions from "./geo/geofunctions";
+import {CR} from "./geo/known_polygons";
 
 export class PladiasPoint {
     constructor(coordinates) {
@@ -20,8 +21,16 @@ export class PladiasPoint {
         this.coords.DMS = DMS;
     }
 
+    getLon() {
+        return this.coords.server.lon
+    }
+
+    getLat() {
+        return this.coords.server.lat
+    }
+
     isInCzechRectangle() {
-        return (this.coords.server.lon > 11.9 && this.coords.server.lon < 19 && this.coords.server.lat > 48.40 && this.coords.server.lat < 51.27)
+        return CR.isInCzechRectangle(this.getLon(), this.getLat())
     }
 
     getInfoLong() {
