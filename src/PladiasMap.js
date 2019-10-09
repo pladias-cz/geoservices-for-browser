@@ -7,13 +7,22 @@ import VectorSource from "ol/source/Vector";
 import projection from "./geo/projections";
 import VectorLayer from "ol/layer/Vector";
 import {commonStyles} from "./style/styles"
+import {Map, View} from 'ol';
 
 import "ol/ol.css";
 
 export class PladiasMap {
-    constructor(olMap, taxonId) {
-        this.taxonId = taxonId;
-        this.olMap = olMap;
+
+    constructor(target, layers, viewOptions) {
+        this.olMap = new Map({
+            target: target,
+            layers: layers,
+            view: new View({viewOptions})
+        });
+    }
+
+    setTaxonId(id) {
+        this.taxonId = id;
     }
 
     getTaxonId() {
