@@ -110,9 +110,6 @@ export class PladiasMap {
             let pixel = map.getEventPixel(evt.originalEvent);
             displayFeatureInfo(pixel);
         });
-        // map.on('click', function (evt) {
-        //     displayFeatureInfo(evt.pixel);
-        // });
         return this;
     }
 
