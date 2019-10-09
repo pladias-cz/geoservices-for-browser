@@ -17,12 +17,13 @@ export class PladiasMap {
         this.olMap = new Map({
             target: target,
             layers: layers,
-            view: new View({viewOptions})
+            view: new View(viewOptions)
         });
     }
 
     setTaxonId(id) {
         this.taxonId = id;
+        return this;
     }
 
     getTaxonId() {
@@ -53,6 +54,7 @@ export class PladiasMap {
         });
 
         this.getOLMap().addLayer(vectorLayer);
+        return this;
     }
 
     highlightSquare() {
@@ -103,11 +105,13 @@ export class PladiasMap {
         // map.on('click', function (evt) {
         //     displayFeatureInfo(evt.pixel);
         // });
+        return this;
     }
 
     fit2card() {
         let DOMElement = this.getOLMap().getTargetElement();
         DOMElement.height((DOMElement.closest('.resizeable').find('.card-block').height()) - 5);
+        return this;
     }
 
 }
