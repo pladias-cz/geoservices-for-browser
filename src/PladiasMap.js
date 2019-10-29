@@ -7,13 +7,23 @@ import VectorSource from "ol/source/Vector";
 import projection from "./geo/projections";
 import VectorLayer from "ol/layer/Vector";
 import {commonStyles} from "./style/styles"
+import {Map, View} from 'ol';
 
 import "ol/ol.css";
 
 export class PladiasMap {
-    constructor(olMap, taxonId) {
-        this.taxonId = taxonId;
-        this.olMap = olMap;
+
+    constructor(target, layers, viewOptions) {
+        this.olMap = new Map({
+            target: target,
+            layers: layers,
+            view: new View(viewOptions)
+        });
+    }
+
+    setTaxonId(id) {
+        this.taxonId = id;
+        return this;
     }
 
     getTaxonId() {
@@ -44,9 +54,10 @@ export class PladiasMap {
         });
 
         this.getOLMap().addLayer(vectorLayer);
+        return this;
     }
 
-    highlightSquare() {
+    highlightSquare(infoElement = null) {
         /** https://openlayers.org/en/latest/examples/vector-layer.html
          * to work well, there must be fill in style of squaresLayer, even with zero Alpha-channel, otherwise it does not render and function forEachFeatureAtPixel() cannot catch its existence.. */
         const map = this.getOLMap();
@@ -72,6 +83,14 @@ export class PladiasMap {
                 return feature;
             });
 
+            if (infoElement !== null) {
+                if (feature) {
+                    infoElement.innerHTML = feature.get('name');
+                } else {
+                    infoElement.innerHTML = '&nbsp;';
+                }
+            }
+
             if (feature !== highlight) {
                 if (highlight) {
                     featureOverlay.getSource().removeFeature(highlight);
@@ -91,14 +110,13 @@ export class PladiasMap {
             let pixel = map.getEventPixel(evt.originalEvent);
             displayFeatureInfo(pixel);
         });
-        // map.on('click', function (evt) {
-        //     displayFeatureInfo(evt.pixel);
-        // });
+        return this;
     }
 
     fit2card() {
         let DOMElement = this.getOLMap().getTargetElement();
         DOMElement.height((DOMElement.closest('.resizeable').find('.card-block').height()) - 5);
+        return this;
     }
 
 }

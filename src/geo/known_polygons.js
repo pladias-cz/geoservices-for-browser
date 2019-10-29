@@ -11,6 +11,9 @@ export const CR = {
     extentOL: function () {
         return Geofunctions.transformExtentWGS2OL(CR.extentWGS);
     },
+    isInCzechRectangle: function (lon,lat) {
+        return (lon > 11.9 && lon < 19 && lat > 48.40 && lat < 51.27)
+    }
 };
 
 export const FSG = {
