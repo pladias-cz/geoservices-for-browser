@@ -1,6 +1,12 @@
 import {commonStyles, preprintStyles, styleFunction} from "../style/styles";
 import vectorSources from "./vector_sources";
 import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import GeoJSON from "ol/format/GeoJSON";
+import projection from "../geo/projections";
+import {bbox as defaultStrategy} from "ol/loadingstrategy";
+import paths from "../geo/geoserver";
+
 
 export const layers = {
     regionsVector: function (visibility) {
@@ -33,24 +39,36 @@ export const layers = {
 };
 
 export const layersWithRadius = {
-    neurcenyVector: function (visibility, radius) {
+    neurcenyVector: function (visibility, taxonId, radius) {
         return new VectorLayer({
             name: 'Šedé záznamy',
             id: 'uknown_validity_status',
             visible: visibility,
-            source: vectorSources.neurceny,
+            source: new VectorSource({
+                format: new GeoJSON(),
+                strategy: defaultStrategy,
+                projection: projection.OL,
+                url: paths.public_wfs + '?service=WFS&version=1.0.0&request=GetFeature&typeName=neurceny&outputFormat=application%2Fjson&VIEWPARAMS=TAXON_ID:' + taxonId,
+                serverType: 'geoserver'
+            }),
             style: styleFunction.getStyle('neurceny', radius)
         });
     },
-    jistyVector: function (visibility, radius) {
+    jistyVector: function (visibility, taxonId, radius) {
         return new VectorLayer({
             name: 'Zelené záznamy',
-            id: 'Accepted validity_status',
+            id: 'accepted_validity_status',
             visible: visibility,
-            source: vectorSources.jisty,
+            source: new VectorSource({
+                format: new GeoJSON(),
+                strategy: defaultStrategy,
+                projection: projection.OL,
+                url: paths.public_wfs + '?service=WFS&version=1.0.0&request=GetFeature&typeName=jisty&outputFormat=application%2Fjson&VIEWPARAMS=TAXON_ID:' + taxonId,
+                serverType: 'geoserver'
+            }),
             style: styleFunction.getStyle('jisty', radius)
         });
-    },
+    }
 };
 
 export const preprintLayers = {

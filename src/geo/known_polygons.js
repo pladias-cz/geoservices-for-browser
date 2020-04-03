@@ -16,6 +16,17 @@ export const CR = {
     }
 };
 
+export const FSG = {
+    centroidWGS: [13.8, 48.95],
+    centroidOL: function () {
+        return transform(FSG.centroidWGS, projection.WGS, projection.OL)
+    },
+    extentWGS: [13.0, 48.0, 15.1, 50.5],
+    extentOL: function () {
+        return Geofunctions.transformExtentWGS2OL(FSG.extentWGS);
+    },
+};
+
 export const polygons = {
     sumava: {
         id: 1,

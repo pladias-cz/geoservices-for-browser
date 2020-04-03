@@ -1,6 +1,6 @@
 {
   "name": "pladias-geoservices",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "A library enabling using WMS/WFS services provided by geoserver.ibot.cas.cz",
   "//": [
     "Already suitable for dalib.cz",
@@ -24,13 +24,13 @@
   },
   "homepage": "https://github.com/krkabol/pladias-geoservices#readme",
   "dependencies": {
-    "ol": "^6.0.1",
+    "ol": "^6.3.0",
     "jquery": "^3.4.1"
   },
   "devDependencies": {
-    "@babel/core": "^7",
-    "babel-loader": "^8.0",
-    "webpack": "^4",
+    "@babel/core": "^7.9",
+    "babel-loader": "^8.1",
+    "webpack": "^4.42",
     "webpack-cli": "^3.3"
   }
 }
