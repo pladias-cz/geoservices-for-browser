@@ -57,6 +57,13 @@ export class PladiasMap {
         return this;
     }
 
+    removeControls(){
+        const map = this.getOLMap();
+        map.getControls().forEach(function(control) {
+            map.removeControl(control);
+        }, this);
+    }
+
     highlightSquare(infoElement = null) {
         /** https://openlayers.org/en/latest/examples/vector-layer.html
          * to work well, there must be fill in style of squaresLayer, even with zero Alpha-channel, otherwise it does not render and function forEachFeatureAtPixel() cannot catch its existence.. */
