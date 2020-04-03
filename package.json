@@ -3,7 +3,7 @@
   "version": "0.0.4",
   "description": "A library enabling using WMS/WFS services provided by geoserver.ibot.cas.cz",
   "//": [
-    "Already suitable for dalib.cz",
+    "Already suitable for dalib.cz and pladias.cz",
     "other domains are on the list.."
   ],
   "main": "dist/index.js",
@@ -24,8 +24,8 @@
   },
   "homepage": "https://github.com/krkabol/pladias-geoservices#readme",
   "dependencies": {
-    "ol": "^6.3.0",
-    "jquery": "^3.4.1"
+    "ol": "^6.3",
+    "jquery": "^3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.9",

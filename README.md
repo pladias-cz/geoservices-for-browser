@@ -6,11 +6,10 @@ JS module for consuming [Pladias](pladias.cz) geowebservices by using OpenLayers
 ```json
 {
   "dependencies": {
-    "pladias-geoservices": "krkabol/pladias-geoservices#v0.0.1"
+    "pladias-geoservices": "krkabol/pladias-geoservices#v0.0.4"
   }
 }
 ```
 
-## TBD
-* split content to several files
+## TBD 
 * divide content into general and site-specific
