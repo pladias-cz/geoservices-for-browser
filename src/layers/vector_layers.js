@@ -3,6 +3,7 @@ import vectorSources from "./vector_sources";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import GeoJSON from "ol/format/GeoJSON";
+import projection from "../geo/projections";
 import {bbox as defaultStrategy} from "ol/loadingstrategy";
 import paths from "../geo/geoserver";
 
