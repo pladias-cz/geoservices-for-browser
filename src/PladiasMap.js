@@ -10,11 +10,10 @@ import {commonStyles} from "./style/styles"
 import {Map, View} from 'ol';
 
 import "ol/ol.css";
-import controls from "./controls";
 
 export class PladiasMap {
 
-    constructor(target, layers, viewOptions) {
+    constructor(target, layers, viewOptions, controls = []) {
         this.olMap = new Map({
             target: target,
             layers: layers,
@@ -57,18 +56,6 @@ export class PladiasMap {
 
         this.getOLMap().addLayer(vectorLayer);
         return this;
-    }
-
-    removeControls(){
-        const map = this.getOLMap();
-        map.getControls().forEach(function(control) {
-            map.removeControl(control);
-        }, this);
-    }
-
-    addControl(item){
-        const map = this.getOLMap();
-        map.addControl(item);
     }
 
     highlightSquare(infoElement = null) {
