@@ -10,6 +10,7 @@ import {commonStyles} from "./style/styles"
 import {Map, View} from 'ol';
 
 import "ol/ol.css";
+import controls from "./controls";
 
 export class PladiasMap {
 
@@ -17,7 +18,8 @@ export class PladiasMap {
         this.olMap = new Map({
             target: target,
             layers: layers,
-            view: new View(viewOptions)
+            view: new View(viewOptions),
+            controls: controls
         });
     }
 

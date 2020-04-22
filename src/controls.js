@@ -1,16 +1,12 @@
 import {defaults as defaultControls} from "ol/control/util";
-import {OverviewMap} from "ol/control";
+import {Attribution, OverviewMap, Zoom, ZoomToExtent} from "ol/control";
+import {CR} from "./geo/known_polygons";
 
 const controls = defaultControls().extend([
-    new OverviewMap()
+    //new OverviewMap(),
+    new Attribution(),
+    new Zoom(),
+    new ZoomToExtent({extent: CR.extentOL()})
 ]);
-
-// defaultControls = {
-//     withExtent: [
-//         new ol.control.Attribution(),
-//         new ol.control.Zoom(),
-//         new ol.control.ZoomToExtent({extent: PladiasMap.extent.rawCR()}),
-//     ]
-// };
 
 export default controls;
