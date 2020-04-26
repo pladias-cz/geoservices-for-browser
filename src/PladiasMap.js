@@ -13,11 +13,12 @@ import "ol/ol.css";
 
 export class PladiasMap {
 
-    constructor(target, layers, viewOptions) {
+    constructor(target, layers, viewOptions, controls = []) {
         this.olMap = new Map({
             target: target,
             layers: layers,
-            view: new View(viewOptions)
+            view: new View(viewOptions),
+            controls: controls
         });
     }
 

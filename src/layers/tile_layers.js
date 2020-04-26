@@ -274,3 +274,18 @@ export const Dalibor = {
         });
     }
 };
+
+export const FloraSilvaeGabretae = {
+    distributionAggregated: function (visibility, taxonId) {
+        return new TileLayer({
+            name: "Agregované rozšíření bayer-pladias-nonautomatic",
+            id: 'aggregated',
+            visible: visibility,
+            source: new TileWMS({
+                url: geoserver.common_wms,
+                params: {'LAYERS': 'fsg_distribution_aggregated', 'TILED': true, 'viewparams': 'TAXON:' + taxonId},
+                serverType: 'geoserver'
+            })
+        });
+    }
+};
