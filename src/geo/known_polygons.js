@@ -17,7 +17,7 @@ export const CR = {
 };
 
 export const FSG = {
-    centroidWGS: [13.8, 48.95],
+    centroidWGS: [13.62, 48.930],
     centroidOL: function () {
         return transform(FSG.centroidWGS, projection.WGS, projection.OL)
     },

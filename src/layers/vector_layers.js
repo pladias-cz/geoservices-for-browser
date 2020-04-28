@@ -35,7 +35,22 @@ export const layers = {
             }
         });
     },
-
+    squaresFsgVector: function (visibility) {
+        return new VectorLayer({
+            name: 'Čtvercová síť FSG',
+            id: 'technical_squares_fsg',
+            visible: visibility,
+            source: vectorSources.squaresFsg,
+            style: function (feature, resolution) {
+                let text = ' ';
+                if (resolution < 300) {
+                    text = feature.get('name');
+                }
+                commonStyles.squares.getText().setText(text);
+                return commonStyles.squares;
+            }
+        });
+    },
 };
 
 export const layersWithRadius = {
