@@ -272,6 +272,18 @@ export const Dalibor = {
                 serverType: 'geoserver'
             })
         });
+    },
+    timeBoundary: function (visibility, taxonId, year) {
+        return new TileLayer({
+            name: "Záznamy přivázané ke kvadrantu",
+            id: 'technical_semafor_timeboundary',
+            visible: visibility,
+            source: new TileWMS({
+                url: geoserver.public_wfs,
+                params: {'LAYERS': 'timeDalibor', 'TILED': true, 'viewparams': 'TAXON_ID:' + taxonId + ";" + 'YEAR:' + year},
+                serverType: 'geoserver'
+            })
+        });
     }
 };
 
