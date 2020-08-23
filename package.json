@@ -24,13 +24,13 @@
   },
   "homepage": "https://github.com/krkabol/pladias-geoservices#readme",
   "dependencies": {
-    "ol": "^6.3",
-    "jquery": "^3.4"
+    "ol": "^6.4.3",
+    "jquery": "^3.5.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.9",
-    "babel-loader": "^8.1",
-    "webpack": "^4.42",
-    "webpack-cli": "^3.3"
+    "@babel/core": "^7.11.4",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   }
 }
