@@ -39,4 +39,10 @@ export class PladiasPoint {
             Geofunctions.roundCoord(this.coords.server.lat) + ',' +
             Geofunctions.roundCoord(this.coords.server.lon) + '</b> | ' + this.coords.DMS;
     }
+
+    getInfoMedium() {
+        return projection.WGS.getCode() + ' <b>' +
+            Geofunctions.roundCoord(this.coords.server.lat) + ',' +
+            Geofunctions.roundCoord(this.coords.server.lon) + '</b> | ' + this.coords.DMS;
+    }
 }
