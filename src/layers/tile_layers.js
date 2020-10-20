@@ -284,6 +284,30 @@ export const Dalibor = {
                 serverType: 'geoserver'
             })
         });
+    },
+    records_count: function (visibility) {
+        return new TileLayer({
+            name: "počet záznamů ve čtverc",
+            id: 'dalibor_records_count',
+            visible: visibility,
+            source: new TileWMS({
+                url: geoserver.public_wms,
+                params: {'LAYERS': 'lichens_records_count', 'TILED': true},
+                serverType: 'geoserver'
+            })
+        });
+    },
+    taxa_count: function (visibility) {
+        return new TileLayer({
+            name: "počet taxonů ve čtverci",
+            id: 'dalibor_taxa_count',
+            visible: visibility,
+            source: new TileWMS({
+                url: geoserver.public_wms,
+                params: {'LAYERS': 'lichens_taxa_count', 'TILED': true},
+                serverType: 'geoserver'
+            })
+        });
     }
 };
 
