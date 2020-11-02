@@ -3,6 +3,8 @@ import {polygons as polygons} from "../geo/known_polygons";
 import TileLayer from "ol/layer/Tile";
 import TileWMS from "ol/source/TileWMS";
 import OSM from "ol/source/OSM";
+import ImageLayer from "ol/layer/Image";
+import ImageWMS from 'ol/source/ImageWMS';
 
 export const layers = {
     osm: function (visibility) {
@@ -308,7 +310,19 @@ export const Dalibor = {
                 serverType: 'geoserver'
             })
         });
-    }
+    },
+    heatmap: function (visibility) {
+    return new ImageLayer({
+        name: "počet taxonů v kvadrantu formou heatmap",
+        id: 'dalibor_heatmap',
+        visible: visibility,
+        source: new ImageWMS({
+            url: geoserver.public_wms,
+            params: {'LAYERS': 'heatmap_lichens'},
+            serverType: 'geoserver'
+        })
+    });
+}
 };
 
 export const FloraSilvaeGabretae = {
