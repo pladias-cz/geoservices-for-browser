@@ -360,7 +360,7 @@ export const FloraSilvaeGabretae = {
     distributionAggregated: function (visibility, taxonId) {
         return new TileLayer({
             name: "Agregované rozšíření bayer-pladias-nonautomatic",
-            id: 'aggregated',
+            id: 'fsg_aggregated',
             visible: visibility,
             source: new TileWMS({
                 url: geoserver.common_wms,
@@ -368,5 +368,17 @@ export const FloraSilvaeGabretae = {
                 serverType: 'geoserver'
             })
         });
-    }
+    },
+    timeBoundary: function (visibility, taxonId, year) {
+        return new TileLayer({
+            name: "Záznamy přivázané ke kvadrantu",
+            id: 'fsg_timeboundary',
+            visible: visibility,
+            source: new TileWMS({
+                url: geoserver.public_wfs,
+                params: {'LAYERS': 'fsg_distribution_aggregated_time', 'TILED': true, 'viewparams': 'TAXON_ID:' + taxonId + ";" + 'YEAR:' + year},
+                serverType: 'geoserver'
+            })
+        });
+    },
 };
