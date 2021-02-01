@@ -3,6 +3,9 @@ import {polygons as polygons} from "../geo/known_polygons";
 import TileLayer from "ol/layer/Tile";
 import TileWMS from "ol/source/TileWMS";
 import OSM from "ol/source/OSM";
+import ImageLayer from "ol/layer/Image";
+import ImageWMS from 'ol/source/ImageWMS';
+import Stamen from 'ol/source/Stamen';
 
 export const layers = {
     osm: function (visibility) {
@@ -308,6 +311,48 @@ export const Dalibor = {
                 serverType: 'geoserver'
             })
         });
+    },
+    heatmap: function (visibility) {
+    return new ImageLayer({
+        name: "počet taxonů v kvadrantu formou heatmap",
+        id: 'dalibor_heatmap',
+        visible: visibility,
+        source: new ImageWMS({
+            url: geoserver.public_wms,
+            params: {'LAYERS': 'heatmap_lichens'},
+            serverType: 'geoserver'
+        })
+    });
+},
+    stamenWatercolor: function (visibility){
+        return new TileLayer({
+            name: "stamen_watercolor",
+            id: 'stamen_watercolor',
+            visible: visibility,
+            source: new Stamen({
+                layer: 'watercolor',
+            }),
+        });
+    },
+    stamenTerrainLabels: function (visibility){
+        return new TileLayer({
+            name: "stamen_terrain-labels",
+            id: 'stamen_terrain-labels',
+            visible: visibility,
+            source: new Stamen({
+                layer: 'terrain-labels',
+            }),
+        });
+    },
+    stamenToner: function (visibility){
+        return new TileLayer({
+            name: "stamen_toner",
+            id: 'stamen_toner',
+            visible: visibility,
+            source: new Stamen({
+                layer: 'toner',
+            }),
+        });
     }
 };
 
@@ -315,7 +360,7 @@ export const FloraSilvaeGabretae = {
     distributionAggregated: function (visibility, taxonId) {
         return new TileLayer({
             name: "Agregované rozšíření bayer-pladias-nonautomatic",
-            id: 'aggregated',
+            id: 'fsg_aggregated',
             visible: visibility,
             source: new TileWMS({
                 url: geoserver.common_wms,
@@ -323,5 +368,17 @@ export const FloraSilvaeGabretae = {
                 serverType: 'geoserver'
             })
         });
-    }
+    },
+    timeBoundary: function (visibility, taxonId, year) {
+        return new TileLayer({
+            name: "Záznamy přivázané ke kvadrantu",
+            id: 'fsg_timeboundary',
+            visible: visibility,
+            source: new TileWMS({
+                url: geoserver.public_wfs,
+                params: {'LAYERS': 'fsg_distribution_aggregated_time', 'TILED': true, 'viewparams': 'TAXON_ID:' + taxonId + ";" + 'YEAR:' + year},
+                serverType: 'geoserver'
+            })
+        });
+    },
 };
