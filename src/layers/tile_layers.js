@@ -6,6 +6,7 @@ import OSM from "ol/source/OSM";
 import ImageLayer from "ol/layer/Image";
 import ImageWMS from 'ol/source/ImageWMS';
 import Stamen from 'ol/source/Stamen';
+import XYZ from 'ol/source/XYZ';
 
 export const layers = {
     osm: function (visibility) {
@@ -30,6 +31,16 @@ export const layers = {
             source: new TileWMS({
                 url: 'http://geoportal.cuzk.cz/WMS_ZM25_PUB/service.svc/get',
                 params: {'LAYERS': 'GR_ZM25'}
+            })
+        })
+    },
+    openTopo: function (visibility) {
+        return new TileLayer({
+            title: 'openTopo',
+            type: 'base',
+            visible: visibility,
+            source: new XYZ({
+                url: 'https://{a|b|c}.tile.opentopomap.org/{z}/{x}/{y}.png'
             })
         })
     },
