@@ -40,7 +40,7 @@ export const layers = {
             type: 'base',
             visible: visibility,
             source: new XYZ({
-                url: 'https://{a|b|c}.tile.opentopomap.org/{z}/{x}/{y}.png'
+                url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png'
             })
         })
     },
