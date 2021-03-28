@@ -42,9 +42,7 @@ export const layers = {
             visible: visibility,
             source: new XYZ({
                 url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png',
-                attributions: [new Attribution({
-                    html: '© <a href="https://wiki.openstreetmap.org/wiki/OpenTopoMap">OpenTopoMap</a> contributors'
-                })],
+                attributions: ['© <a href="https://wiki.openstreetmap.org/wiki/OpenTopoMap">OpenTopoMap</a> contributors'],
             })
         })
     },
