@@ -7,6 +7,7 @@ import ImageLayer from "ol/layer/Image";
 import ImageWMS from 'ol/source/ImageWMS';
 import Stamen from 'ol/source/Stamen';
 import XYZ from 'ol/source/XYZ';
+import Attribution from "ol/control/Attribution";
 
 export const layers = {
     osm: function (visibility) {
@@ -40,7 +41,10 @@ export const layers = {
             type: 'base',
             visible: visibility,
             source: new XYZ({
-                url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png'
+                url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png',
+                attributions: [new Attribution({
+                    html: '© <a href="https://wiki.openstreetmap.org/wiki/OpenTopoMap">OpenTopoMap</a> contributors'
+                })],
             })
         })
     },
