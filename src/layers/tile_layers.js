@@ -5,7 +5,6 @@ import TileWMS from "ol/source/TileWMS";
 import OSM from "ol/source/OSM";
 import ImageLayer from "ol/layer/Image";
 import ImageWMS from 'ol/source/ImageWMS';
-import Stamen from 'ol/source/Stamen';
 import XYZ from 'ol/source/XYZ';
 
 export const layers = {
@@ -325,36 +324,6 @@ export const Dalibor = {
         })
     });
 },
-    stamenWatercolor: function (visibility){
-        return new TileLayer({
-            name: "stamen_watercolor",
-            id: 'stamen_watercolor',
-            visible: visibility,
-            source: new Stamen({
-                layer: 'watercolor',
-            }),
-        });
-    },
-    stamenTerrainLabels: function (visibility){
-        return new TileLayer({
-            name: "stamen_terrain-labels",
-            id: 'stamen_terrain-labels',
-            visible: visibility,
-            source: new Stamen({
-                layer: 'terrain-labels',
-            }),
-        });
-    },
-    stamenToner: function (visibility){
-        return new TileLayer({
-            name: "stamen_toner",
-            id: 'stamen_toner',
-            visible: visibility,
-            source: new Stamen({
-                layer: 'toner',
-            }),
-        });
-    },
     carto: function (visibility){
         return new TileLayer({
             name: "carto",
