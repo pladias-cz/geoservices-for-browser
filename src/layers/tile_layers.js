@@ -6,6 +6,7 @@ import OSM from "ol/source/OSM";
 import ImageLayer from "ol/layer/Image";
 import ImageWMS from 'ol/source/ImageWMS';
 import Stamen from 'ol/source/Stamen';
+import XYZ from 'ol/source/XYZ';
 
 export const layers = {
     osm: function (visibility) {
@@ -352,6 +353,17 @@ export const Dalibor = {
             source: new Stamen({
                 layer: 'toner',
             }),
+        });
+    },
+    carto: function (visibility){
+        return new TileLayer({
+            name: "carto",
+            id: 'carto',
+            visible: visibility,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            source: new XYZ({
+                url:'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+            })
         });
     }
 };
