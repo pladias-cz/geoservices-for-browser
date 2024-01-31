@@ -5,9 +5,7 @@ import TileWMS from "ol/source/TileWMS";
 import OSM from "ol/source/OSM";
 import ImageLayer from "ol/layer/Image";
 import ImageWMS from 'ol/source/ImageWMS';
-import Stamen from 'ol/source/Stamen';
 import XYZ from 'ol/source/XYZ';
-import Attribution from "ol/control/Attribution";
 
 export const layers = {
     osm: function (visibility) {
@@ -32,17 +30,6 @@ export const layers = {
             source: new TileWMS({
                 url: 'http://geoportal.cuzk.cz/WMS_ZM25_PUB/service.svc/get',
                 params: {'LAYERS': 'GR_ZM25'}
-            })
-        })
-    },
-    openTopo: function (visibility) {
-        return new TileLayer({
-            title: 'openTopo',
-            type: 'base',
-            visible: visibility,
-            source: new XYZ({
-                url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png',
-                attributions: ['© <a href="https://wiki.openstreetmap.org/wiki/OpenTopoMap">OpenTopoMap</a> contributors'],
             })
         })
     },
@@ -337,34 +324,15 @@ export const Dalibor = {
         })
     });
 },
-    stamenWatercolor: function (visibility){
+    carto: function (visibility){
         return new TileLayer({
-            name: "stamen_watercolor",
-            id: 'stamen_watercolor',
+            name: "carto",
+            id: 'carto',
             visible: visibility,
-            source: new Stamen({
-                layer: 'watercolor',
-            }),
-        });
-    },
-    stamenTerrainLabels: function (visibility){
-        return new TileLayer({
-            name: "stamen_terrain-labels",
-            id: 'stamen_terrain-labels',
-            visible: visibility,
-            source: new Stamen({
-                layer: 'terrain-labels',
-            }),
-        });
-    },
-    stamenToner: function (visibility){
-        return new TileLayer({
-            name: "stamen_toner",
-            id: 'stamen_toner',
-            visible: visibility,
-            source: new Stamen({
-                layer: 'toner',
-            }),
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            source: new XYZ({
+                url:'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+            })
         });
     }
 };
