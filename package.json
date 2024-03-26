@@ -1,6 +1,6 @@
 {
   "name": "pladias-geoservices",
-  "version": "0.0.4",
+  "version": "0.1.2",
   "description": "A library enabling using WMS/WFS services provided by geoserver.ibot.cas.cz",
   "//": [
     "Already suitable for dalib.cz and pladias.cz",
