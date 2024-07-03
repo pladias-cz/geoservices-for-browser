@@ -19,12 +19,16 @@ const webpack = require('webpack');
 const dotenv = require('dotenv');
 const env = dotenv.config().parsed;
 
-...
+//... pure Webpack
 plugins: [
     new webpack.DefinePlugin({ //https://webpack.js.org/plugins/define-plugin/
         'process.env': JSON.stringify(env)
     })
 ]
+// Encore
+    Encore.addPlugin(new webpack.DefinePlugin({
+        'process.env': JSON.stringify(env)
+    });
 
 ```
 and create .env file next to webpack.config.js

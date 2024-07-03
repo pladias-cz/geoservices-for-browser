@@ -1,6 +1,6 @@
 import {CR, SK} from "./geo/known_polygons";
 
-function getCountryPolygon() {
+export default function getCountryPolygon() {
     const country = process.env.COUNTRY;
     if ("CR" === country) {
         return CR;
@@ -10,5 +10,3 @@ function getCountryPolygon() {
     }
     return false;
 }
-
-module.exports = {getCountryPolygon};

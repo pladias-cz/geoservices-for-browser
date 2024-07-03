@@ -1,7 +1,7 @@
 'use strict';
 import projection from "./geo/projections";
 import Geofunctions from "./geo/geofunctions";
-import {getCountryPolygon} from "./config";
+import getCountryPolygon from "./config";
 
 export class PladiasPoint {
     constructor(coordinates) {
