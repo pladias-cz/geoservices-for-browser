@@ -1,7 +1,7 @@
 'use strict';
 import projection from "./geo/projections";
 import Geofunctions from "./geo/geofunctions";
-import {CR} from "./geo/known_polygons";
+import {getCountryPolygon} from "./config";
 
 export class PladiasPoint {
     constructor(coordinates) {
@@ -30,7 +30,7 @@ export class PladiasPoint {
     }
 
     isInCzechRectangle() {
-        return CR.isInCzechRectangle(this.getLon(), this.getLat())
+        return getCountryPolygon().isPointInside(this.getLon(), this.getLat())
     }
 
     getInfoLong() {

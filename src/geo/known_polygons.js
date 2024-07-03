@@ -5,14 +5,33 @@ import Geofunctions from "./geofunctions";
 export const CR = {
     centroidWGS: [15.4, 49.85],
     centroidOL: function () {
-        return transform(CR.centroidWGS, projection.WGS, projection.OL)
+        return transform(this.centroidWGS, projection.WGS, projection.OL)
     },
     extentWGS: [14.9, 48.6, 16.1, 51.1],
     extentOL: function () {
-        return Geofunctions.transformExtentWGS2OL(CR.extentWGS);
+        return Geofunctions.transformExtentWGS2OL(this.extentWGS);
     },
+    /** @deprecated , use isPointInside */
     isInCzechRectangle: function (lon,lat) {
+        return this.isPointInside (lon,lat)
+    },
+    isPointInside: function (lon,lat) {
         return (lon > 11.9 && lon < 19 && lat > 48.40 && lat < 51.27)
+    }
+};
+
+/** TODO - provide correct coordinates for Slovakia */
+export const SK = {
+    centroidWGS: [19, 49],
+    centroidOL: function () {
+        return transform(this.centroidWGS, projection.WGS, projection.OL)
+    },
+    extentWGS: [18, 47, 20, 50],
+    extentOL: function () {
+        return Geofunctions.transformExtentWGS2OL(this.extentWGS);
+    },
+    isPointInside: function (lon,lat) {
+        return (lon > 16 && lon < 21 && lat > 47 && lat < 51)
     }
 };
 

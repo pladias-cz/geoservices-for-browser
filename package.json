@@ -31,6 +31,7 @@
     "@babel/core": "^7",
     "babel-loader": "^9",
     "webpack": "^5",
-    "webpack-cli": "^5"
+    "webpack-cli": "^5",
+    "dotenv": "^16"
   }
 }

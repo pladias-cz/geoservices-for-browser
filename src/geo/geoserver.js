@@ -1,10 +1,10 @@
 import * as httpHelper from "../common/http_helpers";
 
 const paths = {
-    public_wfs: 'https://geoserver.ibot.cas.cz/pladias_wfs/ows',
-    public_wms: 'https://geoserver.ibot.cas.cz/pladias/ows',
-    common_wfs: 'https://geoserver.ibot.cas.cz/common_wfs/ows',
-    common_wms: 'https://geoserver.ibot.cas.cz/common/ows',
+    public_wfs: process.env.PUBLIC_WFS,
+    public_wms: process.env.PUBLIC_WMS,
+    common_wfs: process.env.COMMON_WFS,
+    common_wms: process.env.COMMON_WMS,
     protected_wms: httpHelper.getGeoBasePath() + '/geoserver/validation/wms',
     preprint_wfs: httpHelper.getGeoBasePath() + '/geoserver2/public/ows'
 };
