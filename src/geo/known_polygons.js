@@ -20,18 +20,17 @@ export const CR = {
     }
 };
 
-/** TODO - provide correct coordinates for Slovakia */
 export const SK = {
-    centroidWGS: [19, 49],
+    centroidWGS: [19.7, 48.67],
     centroidOL: function () {
         return transform(this.centroidWGS, projection.WGS, projection.OL)
     },
-    extentWGS: [18, 47, 20, 50],
+    extentWGS: [16.8, 47.7, 22.6, 49.7],
     extentOL: function () {
         return Geofunctions.transformExtentWGS2OL(this.extentWGS);
     },
     isPointInside: function (lon,lat) {
-        return (lon > 16 && lon < 21 && lat > 47 && lat < 51)
+        return (lon > 16.8 && lon < 22.6 && lat > 47.7 && lat < 49.7)
     }
 };
 
