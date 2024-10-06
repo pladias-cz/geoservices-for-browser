@@ -1,5 +1,5 @@
 import {layers as tileLayers, layersByProject, layersByTaxon} from "./layers/tile_layers";
-import {layers as vectorLayers, layersWithRadius, preprintLayers} from "./layers/vector_layers";
+import {layersWithRadius, preprintLayers} from "./layers/vector_layers";
 
 export const Geoservices = {
     getLayer: function (name, visibility) {
