@@ -24,8 +24,8 @@
   },
   "homepage": "https://github.com/krkabol/pladias-geoservices#readme",
   "dependencies": {
-    "jquery": "^3.7.1",
-    "ol": "^8.2.0"
+    "jquery": "^3",
+    "ol": "^10"
   },
   "devDependencies": {
     "@babel/core": "^7",

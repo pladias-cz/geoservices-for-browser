@@ -1,4 +1,4 @@
-import {defaults as defaultControls, Attribution, OverviewMap, Zoom, ZoomToExtent} from "ol/control";
+import {defaults as defaultControls, Attribution, Zoom, ZoomToExtent} from "ol/control";
 import getCountryPolygon from "./config";
 
 const controls = defaultControls().extend([
