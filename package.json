@@ -1,6 +1,6 @@
 {
-  "name": "pladias-geoservices",
-  "version": "0.3",
+  "name": "geoservices-for-browser",
+  "version": "0.3.1",
   "description": "A library enabling using WMS/WFS services provided by geoserver.ibot.cas.cz",
   "//": [
     "Already suitable for dalib.cz and pladias.cz",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/krkabol/pladias-geoservices.git"
+    "url": "git+https://github.com/pladias-cz/geoservices-for-browser.git"
   },
   "keywords": [
     "pladias, flora, geoservice, wms, wfs, openlayers"
@@ -20,9 +20,9 @@
   "author": "Petr Novotný",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/krkabol/pladias-geoservices/issues"
+    "url": "https://github.com/pladias-cz/geoservices-for-browser/issues"
   },
-  "homepage": "https://github.com/krkabol/pladias-geoservices#readme",
+  "homepage": "https://github.com/pladias-cz/geoservices-for-browser#readme",
   "dependencies": {
     "jquery": "^3",
     "ol": "^10"
