@@ -29,6 +29,10 @@ export class PladiasPoint {
         return this.coords.server.lat
     }
 
+    getDMS() {
+        return this.coords.DMS;
+    }
+
     isInCzechRectangle() {
         return getCountryPolygon().isPointInside(this.getLon(), this.getLat())
     }

@@ -59,6 +59,32 @@ export class PladiasMap {
         return this;
     }
 
+    /**
+     * used to draw "crossHairStyle" precision area for new occurrence input
+     */
+    drawCircleInMeterWithCenter(center, radius) {
+        let circleRadius = (radius / METERS_PER_UNIT.m) * 2;
+        let circle = new Circle(center, circleRadius);
+        let circleFeature = new Feature(circle);
+
+        let circleSmall = new Circle(center, (1 / METERS_PER_UNIT.m) * 2);
+        let circleFeatureSmall = new Feature(circleSmall);
+
+        // Source and vector layer
+        const vectorSource = new VectorSource({
+            projection: projection.WGS.getCode()
+        });
+        vectorSource.addFeature(circleFeature);
+        vectorSource.addFeature(circleFeatureSmall);
+        const vectorLayer = new VectorLayer({
+            name: "Polohová přesnost záznamu (coords buffer)",
+            id: 'coordspreci2',
+            source: vectorSource
+        });
+
+        this.getOLMap().addLayer(vectorLayer);
+        return vectorLayer;
+    }
     highlightSquare(infoElement = null) {
         /** https://openlayers.org/en/latest/examples/vector-layer.html
          * to work well, there must be fill in style of squaresLayer, even with zero Alpha-channel, otherwise it does not render and function forEachFeatureAtPixel() cannot catch its existence.. */
