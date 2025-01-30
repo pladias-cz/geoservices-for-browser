@@ -31,6 +31,8 @@ const overviewMapControl = new OverviewMap({
             source: new OSM(),
         }),
     ],
+    collapseLabel: '\u00BB',
+    label: '\u00AB',
     collapsed: false,
     ratio: 1,
     className: 'ol-overviewmap ol-custom-overview'
