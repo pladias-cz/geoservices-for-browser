@@ -14,7 +14,7 @@ const scaleControl = new ScaleLine({
     units: 'metric',
     bar: true,
     steps: 4,
-    text: true,
+    text: false,
     minWidth: 140,
 });
 
