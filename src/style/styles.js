@@ -26,7 +26,7 @@ export const commonStyles =
                 image: new CircleStyle({
                     radius: radius,
                     fill: colors.fill.neurceny,
-                    stroke: colors.stroke.jisty
+                    stroke: colors.stroke.neurceny
                 })
             });
         },
