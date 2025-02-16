@@ -275,6 +275,21 @@ export const layersByTaxon = {
     }
 };
 
+export const Pladias = {
+    timeBoundary: function (visibility, taxonId, year) {
+        return new TileLayer({
+            name: "Záznamy přivázané ke kvadrantu",
+            id: 'technical_semafor_timeboundary',
+            visible: visibility,
+            source: new TileWMS({
+                url: geoserver.public_wfs,
+                params: {'LAYERS': 'timePladias', 'TILED': true, 'viewparams': 'TAXON_ID:' + taxonId + ";" + 'YEAR:' + year},
+                serverType: 'geoserver'
+            })
+        });
+    },
+};
+
 export const Dalibor = {
     semaforPublic: function (visibility, taxonId) {
         return new TileLayer({
@@ -325,17 +340,17 @@ export const Dalibor = {
         });
     },
     heatmap: function (visibility) {
-    return new ImageLayer({
-        name: "počet taxonů v kvadrantu formou heatmap",
-        id: 'dalibor_heatmap',
-        visible: visibility,
-        source: new ImageWMS({
-            url: geoserver.public_wms,
-            params: {'LAYERS': 'heatmap_lichens'},
-            serverType: 'geoserver'
-        })
-    });
-},
+        return new ImageLayer({
+            name: "počet taxonů v kvadrantu formou heatmap",
+            id: 'dalibor_heatmap',
+            visible: visibility,
+            source: new ImageWMS({
+                url: geoserver.public_wms,
+                params: {'LAYERS': 'heatmap_lichens'},
+                serverType: 'geoserver'
+            })
+        });
+    },
     carto: function (visibility){
         return new TileLayer({
             name: "carto",
