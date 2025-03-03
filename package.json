@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7",
-    "babel-loader": "^9",
+    "babel-loader": "^10",
     "webpack": "^5",
     "webpack-cli": "^6",
     "dotenv": "^16"
