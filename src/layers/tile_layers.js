@@ -242,6 +242,21 @@ export const layersByTaxon = {
             })
         });
     },
+    bayernflora_pladias_taxon_quads: function (visibility, taxonId) {
+        return new TileLayer({
+            name: "BayernFlora",
+            id: 'data_bayernflora_pladias_taxon_quads',
+            visible: visibility,
+            source: new TileWMS({
+                url: geoserver.public_wms,
+                params: {
+                    'LAYERS': 'pladias:bayernflora_pladias_taxon_quads',
+                    'TILED': true,
+                    'viewparams': 'TAXON_ID:' + taxonId
+                },
+                serverType: 'geoserver' })
+        });
+    },
     bayernflora_fsg_taxon_quads: function (visibility, taxonId) {
         return new TileLayer({
             name: "BayernFlora",
