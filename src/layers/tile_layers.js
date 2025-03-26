@@ -207,15 +207,33 @@ export const layersByTaxon = {
             })
         });
     },
-    bayernflora_pladias_taxon_quads: function (visibility, taxonId) {
+    gbif_quads_other: function (visibility, taxonId) {
         return new TileLayer({
-            name: "BayernFlora",
-            id: 'data_bayernflora_pladias_taxon_quads',
+            name: "GBIF (except iNaturalist)",
+            id: 'data_gbif_quads_other',
             visible: visibility,
+            attribution: '&copy;  <a href="https://www.gbif.org/">GBIF Contributors</a>',
             source: new TileWMS({
                 url: geoserver.public_wms,
                 params: {
-                    'LAYERS': 'pladias:bayernflora_pladias_taxon_quads',
+                    'LAYERS': 'shared:gbif_quadrants_other',
+                    'TILED': true,
+                    'viewparams': 'TAXON_ID:' + taxonId
+                },
+                serverType: 'geoserver'
+            })
+        });
+    },
+    gbif_quads_inaturalist: function (visibility, taxonId) {
+        return new TileLayer({
+            name: "iNaturalist (via GBIF)",
+            id: 'data_gbif_quads_inaturalist',
+            visible: visibility,
+            attribution: '&copy; <a href="https://www.inaturalist.org/">iNaturalist</a> contributors',
+            source: new TileWMS({
+                url: geoserver.public_wms,
+                params: {
+                    'LAYERS': 'shared:gbif_quadrants_inaturalist',
                     'TILED': true,
                     'viewparams': 'TAXON_ID:' + taxonId
                 },
