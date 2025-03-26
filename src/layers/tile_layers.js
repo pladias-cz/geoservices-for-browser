@@ -232,6 +232,7 @@ export const layersByTaxon = {
             attribution: '&copy; <a href="https://www.inaturalist.org/">iNaturalist</a> contributors',
             source: new TileWMS({
                 url: geoserver.public_wms,
+                attributions: '&copy; <a href="https://www.inaturalist.org/">iNaturalist</a> contributors',
                 params: {
                     'LAYERS': 'shared:gbif_quadrants_inaturalist',
                     'TILED': true,
