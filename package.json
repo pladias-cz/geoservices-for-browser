@@ -32,6 +32,6 @@
     "babel-loader": "^10",
     "webpack": "^5",
     "webpack-cli": "^6",
-    "dotenv": "^16"
+    "dotenv": "^17"
   }
 }
