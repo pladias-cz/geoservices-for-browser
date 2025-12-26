@@ -27,6 +27,10 @@ const vectorSources = {
         format: new GeoJSON(),
         url: paths.common_wfs + '?service=WFS&version=1.0.0&request=GetFeature&typeName=common:squares_fsg&outputFormat=application%2Fjson'
     }),
+    squaresFvd: new VectorSource({
+        format: new GeoJSON(),
+        url: paths.common_wfs + '?service=WFS&version=1.0.0&request=GetFeature&typeName=common:squares_fvd&outputFormat=application%2Fjson'
+    }),
     regions: new VectorSource({
         format: new GeoJSON(),
         loader: function (extent, resolution, projection) {

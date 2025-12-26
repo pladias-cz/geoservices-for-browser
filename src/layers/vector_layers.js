@@ -51,6 +51,22 @@ export const layers = {
             }
         });
     },
+    squaresFvdVector: function (visibility) {
+        return new VectorLayer({
+            name: 'Čtvercová síť FVD',
+            id: 'technical_squares_fvd',
+            visible: visibility,
+            source: vectorSources.squaresFvd,
+            style: function (feature, resolution) {
+                let text = ' ';
+                if (resolution < 300) {
+                    text = feature.get('name');
+                }
+                commonStyles.squares.getText().setText(text);
+                return commonStyles.squares;
+            }
+        });
+    },
 };
 
 export const layersWithRadius = {
