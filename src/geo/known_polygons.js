@@ -46,11 +46,11 @@ export const FSG = {
 };
 
 export const FVD = {
-    centroidWGS: [14.62, 48.530],
+    centroidWGS: [14.37, 48.51],
     centroidOL: function () {
         return transform(FVD.centroidWGS, projection.WGS, projection.OL)
     },
-    extentWGS: [14.0, 46.0, 16.1, 49.5],
+    extentWGS: [13.6, 47.0, 15.5, 49.5],
     extentOL: function () {
         return Geofunctions.transformExtentWGS2OL(FVD.extentWGS);
     },
