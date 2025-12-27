@@ -63,5 +63,12 @@ export const polygons = {
         centroidOL: function () {
             return transform(this.centroidWGS, projection.WGS, projection.OL)
         }
+    },
+    fvd: {
+        id: 4,
+        centroidWGS: [14.62, 48.530],
+        centroidOL: function () {
+            return transform(this.centroidWGS, projection.WGS, projection.OL)
+        }
     }
 };

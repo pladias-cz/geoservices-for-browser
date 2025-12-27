@@ -94,6 +94,18 @@ export const layers = {
             })
         });
     },
+    regionFvd: function (visibility) {
+        return new TileLayer({
+            name: 'Regiony',
+            id: 'technical_regions',
+            visible: visibility,
+            source: new TileWMS({
+                url: geoserver.common_wms,
+                params: {'LAYERS': 'commonStyles:regions', 'TILED': true,'viewparams': 'ID:' + polygons.fvd.id},
+                serverType: 'geoserver'
+            })
+        });
+    },
 
 };
 
