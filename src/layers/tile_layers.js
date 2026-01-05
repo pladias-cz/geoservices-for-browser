@@ -436,3 +436,30 @@ export const FloraSilvaeGabretae = {
         });
     },
 };
+
+export const FVD = {
+    distributionAggregated: function (visibility, taxonId) {
+        return new TileLayer({
+            name: "Agregované rozšíření gbif-pladias-nonautomatic",
+            id: 'fvd_aggregated',
+            visible: visibility,
+            source: new TileWMS({
+                url: geoserver.common_wms,
+                params: {'LAYERS': 'fvd_distribution_aggregated', 'TILED': true, 'viewparams': 'TAXON:' + taxonId},
+                serverType: 'geoserver'
+            })
+        });
+    },
+    timeBoundary: function (visibility, taxonId, year) {
+        return new TileLayer({
+            name: "Agregované rozšíření gbif-pladias-nonautomatic s time threshold",
+            id: 'fvd_timeboundary',
+            visible: visibility,
+            source: new TileWMS({
+                url: geoserver.public_wfs,
+                params: {'LAYERS': 'fvd_distribution_aggregated_time', 'TILED': true, 'viewparams': 'TAXON_ID:' + taxonId + ";" + 'YEAR:' + year},
+                serverType: 'geoserver'
+            })
+        });
+    },
+};
