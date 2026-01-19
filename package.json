@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/pladias-cz/geoservices-for-browser#readme",
   "dependencies": {
-    "jquery": "^3",
+    "jquery": "^4",
     "ol": "^10"
   },
   "devDependencies": {
