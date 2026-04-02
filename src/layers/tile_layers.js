@@ -19,7 +19,7 @@ export const layers = {
             source: new OSM()
         });
     },
-    zm25: function (visibility) {
+    zm25: function (visibility) { // @deprecated
         return new TileLayer({
             title: 'ZM 25',
             name: 'ZM 25',
@@ -31,6 +31,23 @@ export const layers = {
             source: new TileWMS({
                 url: 'http://geoportal.cuzk.cz/WMS_ZM25_PUB/service.svc/get',
                 params: {'LAYERS': 'GR_ZM25'}
+            })
+        })
+    },
+    ztm: function (visibility) {
+        return new TileLayer({
+            title: 'ZTM',
+            name: 'ZTM',
+            id: 'base_ztm',
+            type: 'base',
+            minResolution: 0,
+            maxResolution: 12,
+            visible: visibility,
+            source: new XYZ({
+                url: 'https://ags.cuzk.gov.cz/arcgis1/rest/services/ZTM_WM/MapServer/tile/{z}/{y}/{x}?blankTile=false',
+                projection: 'EPSG:3857',
+                maxZoom: 23,
+                crossOrigin: 'anonymous'
             })
         })
     },
