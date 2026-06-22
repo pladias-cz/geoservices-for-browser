@@ -28,7 +28,7 @@
     "ol": "^10"
   },
   "devDependencies": {
-    "@babel/core": "^7",
+    "@babel/core": "^8",
     "babel-loader": "^10",
     "webpack": "^5",
     "webpack-cli": "^7",
